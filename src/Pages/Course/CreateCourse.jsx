@@ -6,90 +6,75 @@ import HomeLayout from "../../Layouts/HomeLayout";
 import { createNewCourse } from "../../Redux/Slices/CourseSlice";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 export function CreateCourse() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
 
-  const [userInput, setUserInput] = useState({
-    title: "",
-    description: "",
-    category: "",
-    thumbnail: "",
-    createdBy: "",
-    previewImage: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useForm();
 
   function handleImageUpload(e) {
-    e.preventDefault();
-
     const uploadedImage = e.target.files[0];
-    console.log("uploaded image is:", uploadedImage);
     const imageUrl = URL.createObjectURL(uploadedImage);
-    console.log("uploaded image ko url me convert krne k baad", imageUrl);
-    if (uploadedImage) {
-      setUserInput({
-        ...userInput,
-        thumbnail: uploadedImage,
-        previewImage: imageUrl,
+    setPreviewImage(imageUrl);
+    setValue("thumbnail", uploadedImage);
+  }
+
+  async function onFormSubmit(data) {
+    console.log(data);
+    if (!data.thumbnail) {
+      return toast.error("Thumbnail is required.", {
+        id: "thumbnailRequired",
+        icon: "😶",
       });
     }
-  }
-
-  function handleUserInput(e) {
-    const { name, value } = e.target;
-    setUserInput({ ...userInput, [name]: value });
-  }
-
-  async function onFormSubmit(e) {
-    e.preventDefault();
-
-    if (
-      !userInput.title ||
-      !userInput.description ||
-      !userInput.category ||
-      !userInput.thumbnail ||
-      !userInput.createdBy
-    ) {
-        return toast.error("All fields are mandatory");
-      
+    setIsLoading(true);
+    console.log("creating course", data);
+    const response = await dispatch(createNewCourse(data));
+    if (response?.payload?.success) {
+      navigate("/courses");
+      toast.success("Course made successfully.🎉", {
+        icon: "🎉",
+      });
     }
-
-    const response = await dispatch(createNewCourse(userInput));
-    console.log(response);
-    console.log("response ka payload ka success", response?.payload?.success );
-    if (response?.payload?.success){
-        setUserInput({
-            title: "",
-            category: "",
-            createdBy: "",
-            description: "",
-            thumbnail: null,
-            previewImage: ""
-        });
-        navigate("/courses");
-    }
+    setIsLoading(false);
+    return;
   }
 
   return (
     <HomeLayout>
       <div className=" flex pt-20 items-center justify-center h-full md:h-[90vh]">
-        <form noValidate
-          className="flex flex-col border justify-center gap-5 rounded-lg p-4 pt-0 text-white w-[250px] sm:w-[500px] md:w-[700px]  shadow-[0_0_10px_black] relative"
-          onSubmit={onFormSubmit}
+        <form
+          noValidate
+          className="flex flex-col  justify-center gap-5 rounded-lg p-4 pt-0 text-white w-[250px] sm:w-[500px] md:w-[700px]  shadow-[0_0_10px_black] relative"
+          onSubmit={handleSubmit(onFormSubmit)}
         >
-          <Link className="absolute top-3 text-2xl link text-accent cursor-pointer">
+          <Link
+            onClick={() => navigate(-1)}
+            className="absolute top-3 text-2xl link text-accent cursor-pointer"
+          >
             <AiOutlineArrowLeft />
           </Link>
 
-          <h1 className="text-center text-2xl font-bold font-serif mt-2">Create New Course</h1>
+          <h1 className="text-center text-2xl font-bold font-serif mt-2">
+            Create New Course
+          </h1>
 
           <main className=" sm:grid grid-cols-2 gap-x-10">
             {/* LEFT SECTION */}
             <div className="gap-y-6">
               <div>
                 <label htmlFor="image_uploads" className="cursor-pointer">
-                  {userInput.previewImage ? (
-                    <img src={userInput.previewImage} />
+                  {previewImage ? (
+                    <img src={previewImage} />
                   ) : (
                     <div className="w-full h-44 m-auto flex items-center justify-center border">
                       <h1 className="font-bold text-lg pl-2 pr-2 font-serif">
@@ -104,7 +89,7 @@ export function CreateCourse() {
                   id="image_uploads"
                   accept=".jpg, .jpeg, .png"
                   type="file"
-                  name="image_uploads"
+                  name="thumbnail"
                   onChange={handleImageUpload}
                 />
               </div>
@@ -118,17 +103,25 @@ export function CreateCourse() {
                   type="text"
                   name="title"
                   id="title"
+                  {...register("title", {
+                    required: "Title required",
+                    minLength:{
+                      value:4,
+                      message:'Title must be 4 characters long'
+                    }
+                  })}
                   placeholder="Enter course title"
                   className="bg-transparent px-2 py-1 border"
-                  value={userInput.title}
-                  onChange={handleUserInput}
                 />
+                {errors && errors.title && (
+                  <p className="text-red-500">*{errors.title.message}*</p>
+                )}
               </div>
             </div>
 
             {/* RIGHT SECTION */}
             <div className="">
-                {/* FIRST SECTION */}
+              {/* FIRST SECTION */}
               <div className="flex flex-col gap-1">
                 <label className="text-lg font-semibold" htmlFor="createdBy">
                   Course Instructor
@@ -138,14 +131,18 @@ export function CreateCourse() {
                   type="text"
                   name="createdBy"
                   id="createdBy"
+                  {...register("createdBy", {
+                    required: "Instructor Name is required",
+                  })}
                   placeholder="Enter course instructor"
                   className="bg-transparent px-2 py-1 border"
-                  value={userInput.createdBy}
-                  onChange={handleUserInput}
                 />
+                {errors && errors.createdBy && (
+                  <p className="text-red-500">*{errors.createdBy.message}*</p>
+                )}
               </div>
 
-                {/* SECOND SECTION */}
+              {/* SECOND SECTION */}
               <div className="flex flex-col gap-1">
                 <label className="text-lg font-semibold" htmlFor="category">
                   Course Category
@@ -155,16 +152,19 @@ export function CreateCourse() {
                   type="text"
                   name="category"
                   id="category"
+                  {...register("category", {
+                    required: "Course Category is required",
+                  })}
                   placeholder="Enter course category"
                   className="bg-transparent px-2 py-1 border"
-                  value={userInput.category}
-                  onChange={handleUserInput}
                 />
+                {errors && errors.category && (
+                  <p className="text-red-500">*{errors.category.message}*</p>
+                )}
               </div>
 
-
-                {/* THIRD SECTION */}
-                <div className="flex flex-col gap-1">
+              {/* THIRD SECTION */}
+              <div className="flex flex-col gap-1">
                 <label className="text-lg font-semibold" htmlFor="description">
                   Course Description
                 </label>
@@ -173,27 +173,33 @@ export function CreateCourse() {
                   type="text"
                   name="description"
                   id="description"
+                  {...register("description", {
+                    required: "Course Description is required",
+                    minLength: {
+                      value:20,
+                      message:'Description must be atleast 20 characters long.'
+                    }
+                  })}
                   placeholder="Enter course description"
                   className="bg-transparent resize-none h-24  px-2 py-1 border"
-                  value={userInput.description}
-                  onChange={handleUserInput}
                 />
+                {errors && errors.description && (
+                  <p className="text-red-500">*{errors.description.message}*</p>
+                )}
               </div>
-
             </div>
           </main>
 
-
           {/* BUTTON */}
-          <button type="submit" className="w-full py-2 px-1 rounded-md font-bold bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 text-lg cursor-pointer">Create Course</button>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-2 px-1 rounded-md font-bold bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 text-lg cursor-pointer"
+          >
+            {isLoading ? "Creating Course...." : "Create Course"}
+          </button>
         </form>
       </div>
     </HomeLayout>
   );
 }
-
-
-
-
-
-

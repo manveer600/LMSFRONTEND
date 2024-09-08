@@ -39,8 +39,7 @@ function HomeLayout({ children }) {
 
     if (res?.payload?.success) navigate("/");
   }
-
-
+  
   function handleOverlayClick(event) {
     if (drawerRef.current && !drawerRef.current.contains(event.target)) {
       hideDrawer();
@@ -48,7 +47,7 @@ function HomeLayout({ children }) {
   }
 
   return (
-    <div className="h-full bg-gray-800 " onClick={handleOverlayClick}>
+    <div className="h-full font-serif bg-gray-800 " onClick={handleOverlayClick}>
       <div className="z-10 drawer absolute w-fit" ref={drawerRef}>
         <input className="drawer-toggle" id="my-drawer" type="checkbox" />
 

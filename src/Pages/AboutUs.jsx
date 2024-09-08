@@ -114,7 +114,7 @@ function AboutUs() {
           <h1 className=" font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 text-4xl font-serif text-blue-500 underline p-5">
             Our Achievers work with
           </h1>
-          <div className="flex flex-row  p-10  overflow-x-scroll no-scrollbar ">
+          <div className="flex   p-10 w-screen  overflow-x-scroll no-scrollbar ">
             <img
               className="ml-[80px] w-[600px] h-20 shadow-[0_0_50px_black]"
               src="https://www.shutterstock.com/image-photo/hcl-sign-near-company-office-260nw-1437722072.jpg"
@@ -212,7 +212,7 @@ function AboutUs() {
           </h1>
 
           <div className="flex first-letter:h-[500px] space-x-[100px] p-10 w-[90vw] overflow-x-scroll no-scrollbar ">
-            <div className="h-[450px] w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 60% increment
               </h1>
@@ -243,7 +243,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 7-12LPA(FRESHER)
               </h1>
@@ -274,7 +274,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px]  w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 60% increment
               </h1>
@@ -305,7 +305,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 24LPA
               </h1>
@@ -334,7 +334,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 250% increment
               </h1>
@@ -365,7 +365,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 1L/PM
               </h1>
@@ -396,7 +396,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-1 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 60% increment
               </h1>
@@ -427,7 +427,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] w-[250px] sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-1 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 22LPA
               </h1>

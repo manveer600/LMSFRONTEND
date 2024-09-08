@@ -30,7 +30,7 @@ function DisplayLectures() {
   }
 
   useEffect(() => {
-    console.log(state);
+    console.log("state is this", state);
     if (!state) navigate("/courses");
     dispatch(getCourseLectures(state._id));
   }, []);
@@ -76,9 +76,9 @@ function DisplayLectures() {
           </div>
         )}
         {lectures && lectures.length > 0 && (
-          <div className="flex flex-col md:flex-row justify-center gap-10  w-full">
+          <div className="flex flex-col lg:flex-row justify-center gap-10  w-full">
             {/* left section for playing videos and displaying course details to admin */}
-            <div className="space-y-5 w-full md:w-4/6 text-white p-2 rounded-lg shadow-[0_0_10px_black]">
+            <div className="space-y-5 w-full lg:w-4/6 text-white p-2 rounded-lg shadow-[0_0_10px_black]">
               <video
                 src={lectures && lectures[currentVideo]?.lecture?.secure_url}
                 className="object-fill rounded-tl-lg rounded-tr-lg w-full"
@@ -102,16 +102,16 @@ function DisplayLectures() {
             </div>
 
             {/* right section for displaying list of lectures */}
-            <ul className=" md:w-2/6 text-white p-2 rounded-lg shadow-[0_0_10px_black] space-y-4">
+            <ul className=" lg:w-2/6 text-white p-4 rounded-lg shadow-[0_0_10px_black] space-y-4">
               <li className="font-semibold text-xl text-yellow-500 flex items-center justify-between">
-                <p className="font-serif underline">Lectures list</p>
+                <p className="font-serif underline text-lg sm:text-xl">Lectures list</p>
                 {role === "ADMIN" && (
                   <button
                     onClick={() => {
                       console.log(state),
                         navigate("/course/addLecture", { state: { ...state } });
                     }}
-                    className="btn-primary px-2 py-1 rounded-md font-serif font-semibold text-sm"
+                    className="btn-primary px-2 py-1 rounded-md font-serif sm:font-semibold text-xs sm:text-sm"
                   >
                     Add new lecture
                   </button>
@@ -125,7 +125,7 @@ function DisplayLectures() {
                         className="cursor-pointer hover:text-yellow-400"
                         onClick={() => setCurrentVideo(idx)}
                       >
-                        <span className="font-serif text-xl">
+                        <span className="font-serif  text-lg sm:text-xl">
                           {" "}
                           Lecture {idx + 1} :{" "}
                         </span>
@@ -141,7 +141,7 @@ function DisplayLectures() {
                               lecture?.title
                             )
                           }
-                          className="btn-accent px-2 py-1  font-semibold text-sm"
+                          className="btn-accent px-2 py-1 rounded font-semibold text-sm"
                         >
                           Delete lecture
                         </button>
@@ -152,12 +152,12 @@ function DisplayLectures() {
             </ul>
           </div>
         )}
-        <button
+        {/* <button
           onClick={() => navigate(-1)}
           className="mb-8 hover:text-red-700 mt-2 px-8 py-3 bg-[#1A2238] border font-medium text-[#FF6A3D]"
         >
           Go Back
-        </button>
+        </button> */}
       </div>
     </HomeLayout>
   );

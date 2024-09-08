@@ -1,202 +1,187 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPersonAdd } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { toast } from "react-hot-toast";
 import HomeLayout from "../Layouts/HomeLayout";
 import { createAccount } from "../Redux/Slices/AuthSlice";
-import { isEmailValid, isPasswordValid } from "../Helpers/regexMatcher";
 import { FaRegEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
-
-
-
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 function Signup() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useForm();
+
   const [previewImage, setPreviewImage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-  const [signupData, setsignupData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    avatar: "",
-  });
-
-  function handleUserInput(e) {
-    const { name, value } = e.target;
-    setsignupData({
-      ...signupData,
-      [name]: value,
-    });
-  }
-
-
-  function togglePasswordVisibility(){
+  function togglePasswordVisibility() {
     setShowPassword(!showPassword);
   }
-  function getImage2(event) {
-    event.preventDefault();
 
+  function getImage(event) {
     const uploadedImage = event.target.files[0];
     if (uploadedImage) {
-      setsignupData({
-        ...signupData,
-        avatar: uploadedImage,
-      });
+      setValue("avatar", uploadedImage);
       setPreviewImage(URL.createObjectURL(uploadedImage));
     }
   }
 
-  async function createNewAccount(event) {
-    event.preventDefault();
-
-    if (
-      !signupData.email ||
-      !signupData.password ||
-      !signupData.fullName ||
-      !signupData.avatar
-    ) {
-      return toast.error("Please fill all the details");
+  async function createNewAccount(data) {
+    console.log('data is this', data);
+    if (!data.avatar) {
+      return toast.error("Profile Image is required💀", {
+        id: "profile",
+        duration:2000
+      });
     }
-
-    if (signupData.fullName.length < 4) {
-      return toast.error("Name should be atleast 4 characters long");
-    }
-
-    // checking valid email id
-    if (!isEmailValid(signupData.email)) {
-      return toast.error("Invalid Email Id");
-    }
-
-    // checking valid password
-    if (!isPasswordValid(signupData.password)) {
-      return toast.error(
-        "Password must be atleast 6-16 characters long with atleast a number and special character"
-      );
-    }
+    setIsLoading(true);
 
     const formData = new FormData();
-    formData.append("fullName", signupData.fullName);
-    formData.append("email", signupData.email);
-    formData.append("password", signupData.password);
-    formData.append("avatar", signupData.avatar);
+    formData.append("fullName", data.fullName);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("avatar", data.avatar);
 
-    // dispatch create account action
     const response = await dispatch(createAccount(formData));
     if (response?.payload?.success) navigate("/user/profile");
-
-    setsignupData({
-        fullName:"",
-        email:"",
-        password:"",
-        avatar:""
-    });
-
-    setPreviewImage("");
+    setIsLoading(false);
   }
 
   return (
     <HomeLayout>
-      <div className=" flex items-center justify-center sm:h-[90vh]">
+      <div className="flex items-center justify-center sm:h-[90vh]">
         <form
           noValidate
-          onSubmit={createNewAccount}
-          className=" mt-14 flex flex-col  justify-center gap-3 space-y-2 rounded-lg p-4 text-white w-[250px] sm:w-96 shadow-[0_0_10px_black]"
+          onSubmit={handleSubmit(createNewAccount)}
+          className=" mt-14 flex flex-col  justify-center gap-3 space-y-2 rounded-lg p-4 text-white  sm:w-96 sm:shadow-[0_0_10px_black]"
         >
-          <h1 className="text-center text-2xl font-bold ">Registration Page</h1>
+          <h1 className="text-center text-2xl font-bold font-serif underline ">Registration Page</h1>
 
           {/* Image Uploading */}
-          <label htmlFor="image_uploads" className="cursor-pointer">
-            {previewImage ? (
-              <img
-                className="w-24 h-24 rounded-full m-auto"
-                src={previewImage}
-                alt=""
-              />
-            ) : (
-              <BsPersonAdd className="w-24 h-24 border-8 rounded-full m-auto" />
-            )}
-          </label>
-
-          <input
-            onChange={getImage2}
-            type="file"
-            className="hidden"
-            id="image_uploads"
-            name="image_uploads"
-            accept=".jpg, .jpeg, .png, .svg"
-          />
+          <div>
+            <label htmlFor="avatar" className="cursor-pointer">
+              {previewImage ? (
+                <img
+                  className="w-24 h-24 rounded-full m-auto"
+                  src={previewImage}
+                  alt="profileImage"
+                />
+              ) : (
+                <BsPersonAdd className="w-24 h-24 border-8 rounded-full m-auto" />
+              )}
+            </label>
+            <input
+              type="file"
+              onChange={getImage}
+              className="hidden"
+              id="avatar"
+            />
+          </div>
 
           {/* Name */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="fullName" className="font-semibold">
+            <label htmlFor="fullName" className="font-semibold font-serif">
               Full Name
             </label>
             <input
-              type="fullName"
-              required
+              type="text"
               name="fullName"
               id="fullName"
+              {...register("fullName", {
+                required: "Full Name is required",
+                minLength: {
+                  value: 4,
+                  message: "Full name should be at least 4 characters long.",
+                },
+              })}
               placeholder="Enter your Full Name"
               className="px-2 py-1 bg-transparent border"
-              onChange={handleUserInput}
-              value={signupData.fullName}
             />
+            {errors?.fullName && (
+              <p className="text-red-500">*{errors?.fullName?.message}*</p>
+            )}
           </div>
 
           {/* Email */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-semibold w-full">
+          <div className="flex flex-col gap-1 ">
+            <label htmlFor="email" className="font-semibold font-serif">
               Email
             </label>
             <input
-              type="email"
-              required
+              type="text"
               name="email"
               id="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Email not valid",
+                },
+              })}
               placeholder="abc@gmail.com"
               className="px-2 py-1 bg-transparent border"
-              onChange={handleUserInput}
-              value={signupData.email}
             />
+            {errors?.email && (
+              <p className="text-red-500">*{errors?.email?.message}*</p>
+            )}
           </div>
 
           {/* Password */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-semibold">
+          <div className="flex flex-col relative gap-1">
+            <label htmlFor="password" className="font-semibold font-serif">
               Password
             </label>
             <input
-              type={showPassword ? 'text':'password'}
-              required
+              type={showPassword ? "text" : "password"}
               name="password"
               id="password"
+              {...register("password", {
+                required: "Password is required",
+                pattern: {
+                  value:
+                    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+                  message:
+                    "Password must be 6-16 characters long with at least a number and special character.",
+                },
+              })}
               placeholder="Enter your password"
               className="px-2 py-1 bg-transparent border"
-              onChange={handleUserInput}
-              value={signupData.password}
             />
-            {signupData.password && <button
-            type="button"
-            className="relative bottom-7 text-red-500 font-serif hover:text-black left-[320px] cursor-pointer"
-            onClick={togglePasswordVisibility}
-          >
-            {showPassword ? <IoEyeOff/> : <FaRegEye/> }
-          </button>}
+            {watch("password") && (
+              <button
+                type="button"
+                className="absolute right-2 top-9 text-center text-red-500 hover:text-black cursor-pointer"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <IoEyeOff /> : <FaRegEye />}
+              </button>
+            )}
+
+            {errors?.password && (
+              <p className="text-red-500">*{errors?.password?.message}*</p>
+            )}
           </div>
 
           {/* Button To Create an Account */}
           <button
             type="submit"
-            className="bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300  text-lg cursor-pointer rounded-lg py-2 font-semibold mt-2"
+            disabled={isLoading}
+            className="bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300  text-lg cursor-pointer rounded-lg py-2 font-semibold mt-2 font-serif "
           >
-            Create Account
+            {isLoading ? "Please Wait.." : "Create Account"}
           </button>
-          <p className="text-center">
+          <p className="text-center font-serif">
             Account already exists ?{" "}
             <Link className="link text-accent cursor-pointer" to="/login">
               Login

@@ -1,12 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import HomeLayout from "../Layouts/HomeLayout";
 import { Link } from "react-router-dom";
-import { logout } from "../Redux/Slices/AuthSlice";
+import { useEffect } from "react";
+import { getUserData } from "../Redux/Slices/AuthSlice";
 function HomePage() {
   const dispatch = useDispatch();
-  async function handleLogout() {
-    await dispatch(logout());
-  }
+  useEffect(() => {
+    (async function () {
+      const response = await dispatch(getUserData());
+      console.log('response is this', response);
+    })();
+  }, []);
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
   return (
     <HomeLayout>
@@ -26,8 +30,7 @@ function HomePage() {
           </div>
           {/* 2nd div */}
           <div className="p-4 font-serif md:w-1/2  text-white md:p-3 md:mr-5">
-            <div className="flex gap-2 underline">
-            </div>
+            <div className="flex gap-2 underline"></div>
             <h1 className="text-3xl md:text-5xl w-full mb-2 text-start font-serif underline text-yellow-400">
               About ME
             </h1>
@@ -38,7 +41,8 @@ function HomePage() {
                 {" "}
                 at Guru Tegh Bahadur Institute of Technology,
               </span>{" "}
-              made this wonderful video streaming app where people can come and teach.
+              made this wonderful video streaming app where people can come and
+              teach.
             </h1>
 
             {/* paragraph div */}
@@ -68,33 +72,31 @@ function HomePage() {
             {!isLoggedIn && (
               <div>
                 <div className="text-start mt-2 flex flex-row flex-wrap gap-x-2 gap-y-1 text-white ">
-                <Link to="/login">
-                  <button className="bg-yellow-500 px-5 py-3 rounded-md md:font-semibold md:text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300 mb-2">
-                    Login
-                  </button>
-                </Link>
-                <Link to="/signup">
-                  <button className="border border-yellow-500 md:ml-4 px-5 py-3 rounded-md md:font-semibold md:text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300">
-                    Sign Up
-                  </button>
-                </Link>
+                  <Link to="/login">
+                    <button className="bg-yellow-500 px-5 py-3 rounded-md md:font-semibold md:text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300 mb-2">
+                      Login
+                    </button>
+                  </Link>
+                  <Link to="/signup">
+                    <button className="border border-yellow-500 md:ml-4 px-5 py-3 rounded-md md:font-semibold md:text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300">
+                      Sign Up
+                    </button>
+                  </Link>
                 </div>
                 <p className=" text-start font-serif mt-2 text-yellow-500">
                   Login/Signup{" "}
                   <span className="text-white">to view all courses</span>
                 </p>
               </div>
-              
             )}
-            
+
             <Link to="/about">
-              <p className="text-start text-lg md:ml-1 mt-1  text-green-400 hover:text-red-400 link">About Us</p>
+              <p className="text-start text-lg md:ml-1 mt-1  text-green-400 hover:text-red-400 link">
+                About Us
+              </p>
             </Link>
-           
           </div>
         </div>
-
-       
       </div>
     </HomeLayout>
   );

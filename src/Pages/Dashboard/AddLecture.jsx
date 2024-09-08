@@ -7,21 +7,20 @@ import HomeLayout from "../../Layouts/HomeLayout";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 function AddLecture() {
   const courseDetails = useLocation()?.state;
-  console.log("courseDatails",courseDetails);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [userInput, setUserInput] = useState({
     id: courseDetails._id,
-      lecture: undefined,
-      title: "",
-      description: "",
-      videoSrc: "",
-    });
-
+    lecture: undefined,
+    title: "",
+    description: "",
+    videoSrc: "",
+  });
 
   function handleInputChange(e) {
-    // e.preventDefault();
     const { name, value } = e.target;
     setUserInput({
       ...userInput,
@@ -32,52 +31,60 @@ function AddLecture() {
   function handleVideo(e) {
     const video = e.target.files[0];
     const source = window.URL.createObjectURL(video);
-    console.log("source is", source);
 
     setUserInput({
       ...userInput,
       videoSrc: source,
-      lecture:video
+      lecture: video,
     });
   }
 
   async function onFormSubmit(e) {
-    console.log("12345");
+    setIsLoading(true);
     e.preventDefault();
     if (!userInput.lecture || !userInput.title || !userInput.description) {
-      return toast.error("All fields are mandatory");
+      setIsLoading(false);
+      return toast.error("All fields are mandatory", { id: "lectures" });
     }
+    // const response = await dispatch(addCourseLecture(userInput));
+    // let response;
+    // (async function(){
+    //   try {
+    //     response = await dispatch(addCourseLecture(userInput));
+    //     console.log('response is this', response);
+    //   } catch (error) {
+    //     console.error('Error uploading lecture:', error); // Log error on frontend
+    //     // Display error message to user (e.g., using toast or alert)
+    //   }
+    // })()
     const response = await dispatch(addCourseLecture(userInput));
+    setIsLoading(false);
     if (response?.payload?.success) {
-      setUserInput({
-        id: courseDetails._id,
-        lecture: undefined,
-        title: "",
-        description: "",
-        videoSrc: "",
-      });
+      // setUserInput({
+      //   id: courseDetails._id,
+      //   lecture: undefined,
+      //   title: "",
+      //   description: "",
+      //   videoSrc: "",
+      // });
       navigate(-1);
     }
   }
 
-  
- 
-  
   useEffect(() => {
-    console.log('fuck',courseDetails);
-    if (!courseDetails) 
-      {console.log('courseDetails2nd', courseDetails);
-      navigate("/courses");}
-    
-  }, []);
-
+    if (!courseDetails) {
+      navigate("/courses");
+    }
+  }, [courseDetails, navigate]);
 
   return (
     <div>
       <HomeLayout>
         <div className="min-h-[90vh] text-white flex flex-col items-center justify-center gap-10 mx-16">
-          <div className=" mt-20 underline text-3xl font-bold font-serif text-red-500 text-center ">{courseDetails?.title}</div>
-          <div className="flex border flex-col gap-5 p-2 shadow-[0_0_10px_black]  sm:w-96 rounded-lg">
+          <div className=" mt-20 underline text-3xl font-bold font-serif text-red-500 text-center ">
+            {courseDetails?.title}
+          </div>
+          <div className="flex flex-col gap-5 p-2 shadow-[0_0_10px_black]  sm:w-96 rounded-lg">
             <header className="flex items-center justify-center relative">
               <button
                 className="absolute  left-1 sm:left-2 text-xl text-green-500"
@@ -133,17 +140,23 @@ function AddLecture() {
                   />
                 </div>
               )}
+
+              
               <button
-              type="submit"
-              className="btn btn-primary py-1 font-semibold text-lg"
-            >
-              Add new Lecture
-            </button>
+                type="submit"
+                disabled= {isLoading}
+                className="border bg-blue-900 rounded-lg py-2 font-semibold text-lg"
+              >
+                {isLoading ? 'Adding Lecture....' : 'Add Lecture'}
+              </button>
             </form>
           </div>
-          <button onClick={()=> navigate(-1)} className="mb-8 hover:text-red-700 px-3 sm:px-8 py-2 sm:py-3 bg-[#1A2238] border font-medium text-[#FF6A3D]">
+          {/* <button
+            onClick={() => navigate(-1)}
+            className="mb-8 hover:text-red-700 px-3 sm:px-8 py-2 sm:py-3 bg-[#1A2238] border font-medium text-[#FF6A3D]"
+          >
             Go Back
-      </button>
+          </button> */}
         </div>
       </HomeLayout>
     </div>

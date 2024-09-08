@@ -8,7 +8,7 @@ function Denied() {
       <div className="bg-black text-white px-2 py-1 text-sm rounded rotate-12 absolute">
         Access Denied
       </div>
-      <button className="mt-5">
+      {/* <button className="mt-5">
         <a className="relative inline-block text-sm font-medium text-[#FF6A3D] group active:text-yellow-500 focus:outline-none focus:ring">
           <span
             onClick={() => navigate(-1)}
@@ -17,7 +17,7 @@ function Denied() {
             Go Back
           </span>
         </a>
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -21,6 +21,7 @@ import AdminDashboard from "./Pages/Dashboard/AdminDashboard.jsx";
 import DisplayLectures from "./Pages/Dashboard/DisplayLectures.jsx";
 import ForgotPassword from "./Pages/User/ForgotPassword.jsx";
 import FavouriteCourses from "./Pages/Course/FavouriteCourses.jsx";
+import ResetPasswordPage from "./Pages/User/ResetPassword.jsx";
 function App() {
   return (
     <>
@@ -33,27 +34,23 @@ function App() {
         <Route path="/denied" element={<Denied />} />
         <Route path="/course/description" element={<CourseDescription />} />
         <Route path="/courses" element={<CourseList />} />
+        <Route path="/resetPassword/:resetToken" element={<ResetPasswordPage />}/>
         <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
           <Route path="/course/create" element={<CreateCourse />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
 
-        <Route element={<RequireAuth allowedRoles={["ADMIN", "USER"]} />}>
-          <Route path="/user/profile" element={<Profile />} />
-        </Route>
-
-        <Route path="/user/editProfile" element={<EditProfile/>}/>
-        <Route path="/checkout" element={<Checkout/>}/>
-        <Route path="/checkout/success" element={<CheckoutSuccess/>}/>
-        <Route path="/checkout/fail" element={<CheckoutFailure/>}/>
-        <Route path="/course/displayLectures" element={<DisplayLectures/>}/>
-        <Route path="/course/addLecture" element={<AddLecture/>}/>
-        <Route path="/user/forgotpassword" element={<ForgotPassword/>}/>
-        <Route path="/favCourses" element={<FavouriteCourses/>}/>
+        <Route path="/user/profile" element={<Profile />} />
+        <Route path="/user/editProfile" element={<EditProfile />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+        <Route path="/checkout/fail" element={<CheckoutFailure />} />
+        <Route path="/course/displayLectures" element={<DisplayLectures />} />
+        <Route path="/course/addLecture" element={<AddLecture />} />
+        <Route path="/user/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/favCourses" element={<FavouriteCourses />} />
         <Route path="*" element={<NotFound />} />
-      
       </Routes>
-
     </>
   );
 }

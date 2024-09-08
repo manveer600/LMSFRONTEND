@@ -9,15 +9,8 @@ const initialState = {
 export const getAllCourses = createAsyncThunk('/course/get', async () => {
     console.log('fetching courses');
     try {
-        const response = axiosInstance.get('/courses');
-        toast.promise(response, {
-            loading: "Loading courses....",
-            success: "Courses loaded successfully",
-            error: "Failed to get the courses",
-        })
-        const res = await response;
-        console.log(res);
-        return (await response).data.courses;
+        const response = await axiosInstance.get('/courses');
+        return await response.data.courses;
     } catch (err) {
         toast.error(err?.response?.data?.message);
     }
@@ -49,22 +42,11 @@ export const createNewCourse = createAsyncThunk('/course/create', async (data) =
         formData.append('createdBy', data?.createdBy);
         formData.append('thumbnail', data?.thumbnail);
 
-        const response = axiosInstance.post('/courses', formData);
-        toast.promise
-            (
-                response,
-                {
-                    loading: "Creating new course",
-                    success: "Course Created Successfully",
-                    error: 'Error in creating a course'
-                }
-            )
-
+        const response = await axiosInstance.post('/courses', formData);
         return (await response).data
     } catch (e) {
         console.log(e);
-        console.log('formData upload nhi ho rha');
-        return toast.error(e.response.data.message);
+        return toast.error(e?.response?.data?.message);
     }
 })
 
