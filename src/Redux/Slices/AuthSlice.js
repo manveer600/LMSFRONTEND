@@ -22,6 +22,7 @@ export const createAccount = createAsyncThunk('/auth/signup', async (data) => {
 
 export const login = createAsyncThunk('/auth/login', async (data) => {
     try {
+        console.log('axios Instance', axiosInstance);
         const res = await axiosInstance.post("user/login", data);
         return await res.data;
     }
