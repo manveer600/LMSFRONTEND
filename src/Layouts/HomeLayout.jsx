@@ -47,11 +47,11 @@ function HomeLayout({ children }) {
   }
 
   return (
-    <div className="h-full font-serif bg-gray-800 " onClick={handleOverlayClick}>
-      <div className="z-10 drawer absolute w-fit" ref={drawerRef}>
-        <input className="drawer-toggle" id="my-drawer" type="checkbox" />
+    <div className=" font-serif bg-gray-800 " onClick={handleOverlayClick}>
+      <div className="z-10 drawer  absolute w-fit" ref={drawerRef}>
+        <input className="drawer-toggle  "  id="my-drawer" type="checkbox" />
 
-        <div className="drawer-content">
+        <div className="drawer-content ">
           <label htmlFor="my-drawer" className="cursor-pointer relative">
             <FiMenu
               onClick={changeWidth}
@@ -61,7 +61,7 @@ function HomeLayout({ children }) {
           </label>
         </div>
 
-        <div className="drawer-side w-0">
+        <div className="drawer-side w-0 ">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
 
           <ul className="menu p-4 w-48 h-[100%] sm:w-80 bg-base-200 text-base-content relative">

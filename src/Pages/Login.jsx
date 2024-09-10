@@ -7,6 +7,7 @@ import { login } from "../Redux/Slices/AuthSlice";
 import { FaRegEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 function Login() {
   const {
@@ -36,7 +37,10 @@ function Login() {
     console.log("data is this", data);
     setIsLoading(true);
     const response = await dispatch(login(data));
-    if (response?.payload?.success) navigate("/");
+    if (response?.payload?.success) {
+      toast.success('User LoggedIn successfully',{id:'loggIn'});
+      navigate("/");
+    }
     setIsLoading(false);
   }
 
@@ -88,7 +92,7 @@ function Login() {
               placeholder="Enter your password"
               className="px-2 py-1 bg-transparent border"
             />
-            {watch('password') && (
+            {watch("password") && (
               <button
                 type="button"
                 className="absolute bottom-[10px] text-red-500 font-serif hover:text-black left-[320px] cursor-pointer"
