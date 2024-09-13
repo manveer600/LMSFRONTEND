@@ -78,7 +78,7 @@ function Login() {
           </div>
 
           {/* Password */}
-          <div className="flex flex-col gap-1 relative ">
+          <div className="flex flex-col gap-1 relative  ">
             <label htmlFor="password" className="font-semibold font-serif">
               Password
             </label>
@@ -90,12 +90,12 @@ function Login() {
                 required: "Password is required",
               })}
               placeholder="Enter your password"
-              className="px-2 py-1 bg-transparent border"
+              className=" px-2 py-1 bg-transparent border"
             />
             {watch("password") && (
               <button
                 type="button"
-                className="absolute bottom-[10px] text-red-500 font-serif hover:text-black left-[320px] cursor-pointer"
+                className="absolute bottom-[10px] right-5 text-red-500 font-serif hover:text-black  cursor-pointer"
                 onClick={togglePasswordVisibility}
               >
                 {showPassword ? <IoEyeOff /> : <FaRegEye />}
@@ -111,7 +111,7 @@ function Login() {
               type="submit"
               className="bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 w-full text-lg cursor-pointer rounded-lg py-2 font-semibold mt-2"
             >
-              {isLoading ? "Validating...." : "Login"}
+              {isLoading ? <div className="spinner"></div> : "Login"}
             </button>
             <p className="text-center  mt-0">
               Don't have an account?{" "}

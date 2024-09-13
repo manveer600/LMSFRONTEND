@@ -147,7 +147,7 @@ function AddLecture() {
                 disabled= {isLoading}
                 className="border bg-blue-900 rounded-lg py-2 font-semibold text-lg"
               >
-                {isLoading ? 'Adding Lecture....' : 'Add Lecture'}
+                {isLoading ? <div className="spinner" id="spinner"></div> : 'Add Lecture'}
               </button>
             </form>
           </div>

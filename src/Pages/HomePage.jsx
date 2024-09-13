@@ -15,8 +15,8 @@ function HomePage() {
   return (
     <HomeLayout>
       {/* main div */}
-      <div className="pt-14">
-        <div className=" flex flex-col md:flex-row justify-center items-center h-screen">
+      <div className="pt-10 ">
+        <div className=" flex  flex-col md:flex-row justify-center items-center">
           {/* img div */}
           <div className=" md:w-1/2 flex w-full flex-col items-center">
             <img

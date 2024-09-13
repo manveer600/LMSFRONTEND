@@ -179,7 +179,7 @@ function Signup() {
             disabled={isLoading}
             className="bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300  text-lg cursor-pointer rounded-lg py-2 font-semibold mt-2 font-serif "
           >
-            {isLoading ? "Please Wait.." : "Create Account"}
+            {isLoading ? <div className="spinner"></div> : "Create Account"}
           </button>
           <p className="text-center font-serif">
             Account already exists ?{" "}

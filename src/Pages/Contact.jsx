@@ -5,7 +5,7 @@ import { isEmailValid } from "../Helpers/regexMatcher";
 import axiosInstance from "../Helpers/axiosInstance";
 import { useNavigate } from "react-router-dom";
 function Contact() {
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     name: "",
     email: "",
@@ -20,32 +20,46 @@ function Contact() {
     });
   }
 
-  async function onFormSubmit(e) {
+  async function onFormSubmit(e, data) {
     e.preventDefault();
 
     if (!userInput.email || !userInput.name || !userInput.message) {
-      return toast.error("All fields are mandatory");
+      return toast.error("All fields are mandatory", { id: "contactUs" });
     }
 
     if (!isEmailValid(userInput.email)) {
-      toast.error("Invalid Email");
-      return;
+      return toast.error("Invalid Email", { id: "invalidEmail" });
+    }
+    console.log("data is this", data);
+    setIsLoading(true);
+    const response = await axiosInstance.post("/contact", data);
+    setIsLoading(false);
+    console.log("response while sending message ", response);
+    if (response?.data?.success) {
+      setUserInput({
+        name: "",
+        email: "",
+        message: "",
+      });
+      return toast.success(response?.data?.message, { id: "success" });
     }
 
-    toast.success("Feedback submitted");
+    // toast.success("Feedback submitted");
   }
   return (
     <HomeLayout>
-      <div className="flex flex-col  items-center justify-center sm:h-[100vh]">
+      <div className="flex flex-col  items-center justify-center p-4 sm:h-[100vh]">
         <form
           noValidate
-          onSubmit={onFormSubmit}
-          className="flex mt-14 flex-col items-center justify-center gap-2 p-5 rounded-md text-white sm:w-[22rem] shadow-[0_0_10px_black]"
+          onSubmit={(e) => onFormSubmit(e, userInput)}
+          className="flex  w-full mt-14 flex-col items-center justify-center gap-2 p-5 rounded-md sm:w-[22rem] text-white sm:shadow-[0_0_10px_black]"
         >
-          <h1 className="text-3xl font-semibold font-serif">Contact form</h1>
+          <h1 className="text-2xl underline sm:text-3xl font-semibold font-serif">
+            Contact form
+          </h1>
 
           <div className="flex flex-col w-full gap-1">
-            <label htmlFor="name" className="text-xl font-semibold">
+            <label htmlFor="name" className="text-lg sm:text-xl font-semibold">
               Name
             </label>
 
@@ -62,7 +76,7 @@ function Contact() {
           </div>
 
           <div className="flex flex-col w-full gap-1">
-            <label htmlFor="email" className="text-xl font-semibold">
+            <label htmlFor="email" className="text-lg sm:text-xl font-semibold">
               email
             </label>
             <input
@@ -78,7 +92,10 @@ function Contact() {
           </div>
 
           <div className="flex flex-col w-full gap-1">
-            <label htmlFor="message" className="text-xl font-semibold">
+            <label
+              htmlFor="message"
+              className="text:lg sm:text-xl font-semibold"
+            >
               Message
             </label>
             <textarea
@@ -94,18 +111,11 @@ function Contact() {
 
           <button
             type="submit"
-            className="w-full bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm py-2 font-semibold text-lg cursor-pointer"
+            className="w-full bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-lg py-2 font-semibold text-lg cursor-pointer"
           >
-            Submit
+            {isLoading ? <div className="spinner"></div> : "Submit"}
           </button>
         </form>
-
-        {/* <button
-          onClick={() => navigate(-1)}
-          className="mb-8 hover:text-red-700 mt-2 px-8 py-3 bg-[#1A2238] border font-medium text-[#FF6A3D]"
-        >
-          Go Back
-        </button> */}
       </div>
     </HomeLayout>
   );
