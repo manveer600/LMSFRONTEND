@@ -1,4 +1,4 @@
-import {BsFacebook, BsInstagram, BsLinkedin, BsTwitter} from "react-icons/bs";
+import {BsFacebook, BsInstagram, BsLinkedin, BsGithub} from "react-icons/bs";
 function Footer(){
     const currentDate = new Date();
     // console.log(currentDate);
@@ -11,17 +11,17 @@ function Footer(){
                 </section>
     
             <section className="flex items-center justify-center gap-5 text-2xl text-white">
-                <a target="_blank" href="https://www.facebook.com/" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+                <a target="_blank" href="https://www.facebook.com/profile.php?id=100018265411159" className="hover:text-yellow-500 ">
                     <BsFacebook/>
                 </a>
-                <a target="_blank" href="https://www.instagram.com/" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+                <a target="_blank" href="https://www.instagram.com/manveersingh.23" className="hover:text-yellow-500">
                     <BsInstagram/>
                 </a>
-                <a target="_blank" href="https://www.linkedin.com"className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+                <a target="_blank" href="https://www.linkedin.com/in/manveer-singh-5421041b4/"className="hover:text-yellow-500">
                     <BsLinkedin/>
                 </a>
-                <a target="_blank"  className="hover:text-yellow-500 transition-all ease-in-out duration-300">
-                    <BsTwitter/>
+                <a target="_blank" href="https://github.com/manveer600"  className="hover:text-yellow-500">
+                    <BsGithub/>
                 </a>
             </section>
             

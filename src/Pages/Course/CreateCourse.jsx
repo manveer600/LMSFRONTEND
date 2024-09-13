@@ -51,15 +51,15 @@ export function CreateCourse() {
 
   return (
     <HomeLayout>
-      <div className=" flex pt-20 items-center justify-center h-full md:h-[90vh]">
+      <div className=" flex pt-20 items-center justify-center p-4 h-full md:h-[90vh]">
         <form
           noValidate
-          className="flex flex-col  justify-center gap-5 rounded-lg p-4 pt-0 text-white w-[250px] sm:w-[500px] md:w-[700px]  shadow-[0_0_10px_black] relative"
+          className="flex flex-col  justify-center gap-5 rounded-lg p-4 text-white  pt-4 md:w-[700px]  sm:shadow-[0_0_10px_black] relative"
           onSubmit={handleSubmit(onFormSubmit)}
         >
           <Link
             onClick={() => navigate(-1)}
-            className="absolute top-3 text-2xl link text-accent cursor-pointer"
+            className="absolute top-0 sm:top-7 right-30 text-2xl link text-accent cursor-pointer"
           >
             <AiOutlineArrowLeft />
           </Link>
@@ -76,7 +76,7 @@ export function CreateCourse() {
                   {previewImage ? (
                     <img src={previewImage} />
                   ) : (
-                    <div className="w-full h-44 m-auto flex items-center justify-center border">
+                    <div className="w-full h-44  flex items-center justify-center border">
                       <h1 className="font-bold text-lg pl-2 pr-2 font-serif">
                         Upload your course thumbnail
                       </h1>
@@ -196,7 +196,7 @@ export function CreateCourse() {
             disabled={isLoading}
             className="w-full py-2 px-1 rounded-md font-bold bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 text-lg cursor-pointer"
           >
-            {isLoading ? "Creating Course...." : "Create Course"}
+            {isLoading ? <div className="spinner"></div> : "Create Course"}
           </button>
         </form>
       </div>
