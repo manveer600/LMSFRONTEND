@@ -20,7 +20,7 @@ import { FaUsers } from "react-icons/fa";
 import { GiMoneyStack } from "react-icons/gi";
 import { FcSalesPerformance } from "react-icons/fc";
 import { BsCollectionPlayFill, BsTrash } from "react-icons/bs";
-import { getAllCourses, deleteAllCourses,  deleteCourse} from "../../Redux/Slices/CourseSlice.js";
+import { deleteAllCourses,  deleteCourse, getCourses} from "../../Redux/Slices/CourseSlice.js";
 import toast from "react-hot-toast";
 ChartJs.register(
   ArcElement,
@@ -127,7 +127,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     (async () => {
-      await dispatch(getAllCourses());
+      await dispatch(getCourses());
 
       await dispatch(getStatData());
 

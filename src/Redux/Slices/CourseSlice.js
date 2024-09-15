@@ -6,15 +6,26 @@ const initialState = {
     courseData: []
 }
 
-export const getAllCourses = createAsyncThunk('/course/get', async () => {
+export const getAllCourses = createAsyncThunk('/course/get', async (data) => {
+    console.log('data is this', data);
     console.log('fetching courses');
     try {
-        const response = await axiosInstance.get('/courses');
-        return await response.data.courses;
+        const response = await axiosInstance.get(`/courses?title=${data.title}`);
+        return await response.data.data;
     } catch (err) {
         toast.error(err?.response?.data?.message);
     }
 })
+
+export const getCourses = createAsyncThunk('/course/get', async () => {
+    try {
+        const response = await axiosInstance.get(`/courses`);
+        return await response.data.data;
+    } catch (err) {
+        toast.error(err?.response?.data?.message);
+    }
+})
+
 
 
 export const deleteCourse = createAsyncThunk('/course/delete', async (id) => {
