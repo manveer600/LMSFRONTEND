@@ -5,6 +5,7 @@ import { isEmailValid } from "../Helpers/regexMatcher";
 import axiosInstance from "../Helpers/axiosInstance";
 import { useNavigate } from "react-router-dom";
 function Contact() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     name: "",
@@ -41,6 +42,7 @@ function Contact() {
         email: "",
         message: "",
       });
+      navigate('/');
       return toast.success(response?.data?.message, { id: "success" });
     }
 

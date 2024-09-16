@@ -28,7 +28,7 @@ function Checkout() {
   async function handleSubscription(e) {
     e.preventDefault();
     if (!razorpayKey || !subscription_id) {
-      return toast.error("Something went wrong");
+      return toast.error("Something went wrong", { id: "subscriptionError" });
     }
 
     const options = {
@@ -109,7 +109,6 @@ function Checkout() {
               </button>
             </div>
           </div>
-          
         </form>
       </HomeLayout>
     </div>

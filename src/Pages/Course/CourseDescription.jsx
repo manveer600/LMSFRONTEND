@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import HomeLayout from "../../Layouts/HomeLayout";
+import toast from "react-hot-toast";
 
 function CourseDescription() {
   const navigate = useNavigate();
@@ -9,16 +10,18 @@ function CourseDescription() {
 
   const { role, data } = useSelector((state) => state.auth);
   const isLoggedIn = useSelector((state) => state?.auth.isLoggedIn);
-  // function moveToCheckOut(){
-  //   if(isLoggedIn == true){
-  //     navigate("/checkout");
-  //   }
-  //   else{
-  //     return toast.error('Kindly Log in before you purchase a course', {
-  //       id:'login',
-  //     })
-  //   }
-  // }
+  function moveToCheckOut(){
+    if(isLoggedIn == true){
+      navigate("/checkout");
+    }
+    else{
+      return toast.error('Kindly Log in before you subscribe a course.', {
+        id:'login',
+        icon:'😌',
+        duration:2000
+      })
+    }
+  }
 
   return (
     <HomeLayout>
@@ -65,7 +68,7 @@ function CourseDescription() {
                 </button>
               ) : (
                 <button
-                  onClick={() => navigate("/checkout")}
+                  onClick={moveToCheckOut}
                   className="bg-yellow-600 sm:w-[300px] text-xl rounded-md font-bold px-5 font-serif py-3 hover:bg-yellow-500 transition-all ease-in-out duration-300"
                 >
                   Subscribe
@@ -74,7 +77,7 @@ function CourseDescription() {
             </div>
           </div>
 
-          <div className="sm:w-1/2 flex flex-col space-y-5 pt-10 pr-4">
+          <div className="sm:w-1/2 flex flex-col space-y-5  pt-10 sm:pr-4">
             <div className="flex flex-col">
               <i className="text-xl sm:text-2xl font-serif font-bold text-center sm:text-start text-yellow-500 underline ">
                 Course Name:
@@ -91,7 +94,7 @@ function CourseDescription() {
                 {state?.description}
               </i>
             </div>
-            <div className="flex flex-col items-center sm:items-start">
+            <div className="flex flex-col p-2 items-center sm:items-start">
               <i className="underline text-yellow-500 text-xl sm:text-2xl">
                 Perks and Benefits at Code karo:
               </i>
