@@ -88,7 +88,7 @@ function CourseCard({ data }) {
 
   return (
     // <div className="relative">
-    <div className="text-white p-2 sm:w-[22rem] rounded-lg cursor-pointer  overflow-hidden bg-zinc-700">
+    <div className="text-white p-2 w-[22rem] rounded-lg cursor-pointer  overflow-hidden bg-zinc-700">
       <div
         className="overflow-hidden "
         onClick={() => navigate("/course/description", { state: { ...data } })}

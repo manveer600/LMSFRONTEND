@@ -79,20 +79,11 @@ export function Profile() {
               </h4>
             </div>
           </div>
-          <div className="text-start ml-7 mt-5">
-          <button onClick={() => navigate('/')} className="border border-yellow-500 hover:bg-yellow-500 hover:text-black rounded-lg px-3 py-1">Home</button>
+          <div className=" lg:text-start sm:ml-7 mt-5 text-center">
+          <button onClick={() => navigate('/')} className="border border-yellow-500 hover:bg-yellow-500 hover:text-black rounded-lg px-5 py-1">Home</button>
           </div>
           
         </div>
-
-        {/* {userData.subscription.status === "active" && (
-          <button 
-            onClick={handleCancellation}
-            className="border text-white lg:hidden bg-red-600 hover:bg-green-600 hover:text-black transition-all ease-in-out duration-300 rounded-md font-semibold p-2 cursor-pointer text-center"
-          >
-            Cancel Subscription
-          </button>
-        )} */}
       </div>
     </HomeLayout>
   );
