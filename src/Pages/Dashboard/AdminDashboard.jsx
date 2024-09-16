@@ -23,6 +23,7 @@ import { BsCollectionPlayFill, BsTrash } from "react-icons/bs";
 import {
   deleteAllCourses,
   deleteCourse,
+  getAllCourses,
   getCourses,
 } from "../../Redux/Slices/CourseSlice.js";
 import toast from "react-hot-toast";
@@ -114,7 +115,7 @@ function AdminDashboard() {
       if (res?.payload?.success) {
         console.log("course deleted successfully");
         toast.success("course deleted successfully");
-        await dispatch(getAllCourses());
+        await dispatch(getCourses());
       }
     }
   }
@@ -148,7 +149,7 @@ function AdminDashboard() {
           Admin Dashboard
         </h1>
 
-        <div className="flex border flex-col lg:flex-row gap-5 m-auto">
+        <div className="flex  flex-col lg:flex-row gap-5 m-auto">
           {/* PIE */}
           <div className="flex  shadow-lg lg:w-1/2  flex-col items-center justify-center gap-10 p-5 rounded-md">
             <div className="w-[250px]  justify-center  sm:w-full sm:h-80 sm:flex flex-row items-center ">
@@ -179,7 +180,7 @@ function AdminDashboard() {
           </div>
 
           {/* BAR */}
-          <div className="flex w-full shadow-lg border lg:w-1/2  flex-col items-center justify-center gap-10 rounded-md">
+          <div className="flex w-full shadow-lg  lg:w-1/2  flex-col items-center justify-center gap-10 rounded-md">
             <div className="lg:w-full lg:flex lg:items-center  lg:h-full lg:p-2">
               <Bar className="" data={salesData} />
             </div>
