@@ -5,13 +5,15 @@ import { useEffect } from "react";
 import { getUserData } from "../Redux/Slices/AuthSlice";
 function HomePage() {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
+  console.log('isLogged IN',isLoggedIn);
+  console.log(typeof(isLoggedIn));
+
   useEffect(() => {
     (async function () {
-      const response = await dispatch(getUserData());
-      console.log('response is this', response);
+      await dispatch(getUserData());
     })();
-  }, []);
-  const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
+  }, [dispatch, isLoggedIn]);
   return (
     <HomeLayout>
       {/* main div */}
@@ -53,7 +55,7 @@ function HomePage() {
 
             {/* div for buttons */}
             {/* if logged in */}
-            {isLoggedIn && (
+            {isLoggedIn == true ? (
               <div className="text-start mt-2 flex flex-row flex-wrap gap-x-2 gap-y-1 pt-4 text-white">
                 <Link to="/courses">
                   <button className="bg-cyan-600 mb-3 px-5 py-3 rounded-md font-semibold text-lg cursor-pointer hover:bg-red-600 transition-all ease-in-out duration-300">
@@ -66,10 +68,7 @@ function HomePage() {
                   </button>
                 </Link>
               </div>
-            )}
-            {/* div for buttons */}
-            {/* if not logged in */}
-            {!isLoggedIn && (
+            ) : (
               <div>
                 <div className="text-start mt-2 flex flex-row flex-wrap gap-x-2 gap-y-1 text-white ">
                   <Link to="/login">
@@ -89,6 +88,28 @@ function HomePage() {
                 </p>
               </div>
             )}
+            {/* div for buttons */}
+            {/* if not logged in */}
+            {/* {isLoggedIn == false && (
+              <div>
+                <div className="text-start mt-2 flex flex-row flex-wrap gap-x-2 gap-y-1 text-white ">
+                  <Link to="/login">
+                    <button className="bg-yellow-500 px-5 py-3 rounded-md md:font-semibold md:text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300 mb-2">
+                      Login
+                    </button>
+                  </Link>
+                  <Link to="/signup">
+                    <button className="border border-yellow-500 md:ml-4 px-5 py-3 rounded-md md:font-semibold md:text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300">
+                      Sign Up
+                    </button>
+                  </Link>
+                </div>
+                <p className=" text-start font-serif mt-2 text-yellow-500">
+                  Login/Signup{" "}
+                  <span className="text-white">to view all courses</span>
+                </p>
+              </div>
+            )} */}
 
             <Link to="/about">
               <p className="text-start text-lg md:ml-1 mt-1  text-green-400 hover:text-red-400 link">

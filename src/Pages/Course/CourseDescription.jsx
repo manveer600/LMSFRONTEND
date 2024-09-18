@@ -15,7 +15,7 @@ function CourseDescription() {
       navigate("/checkout");
     }
     else{
-      return toast.error('Kindly Log in before you subscribe a course.', {
+      return toast.error('Unauthenticated, Please Login!', {
         id:'login',
         icon:'😌',
         duration:2000

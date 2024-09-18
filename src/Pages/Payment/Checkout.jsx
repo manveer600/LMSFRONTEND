@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  getRazorPayId,
-  purchaseCourseBundle,
+  getRazorPayKey,
+  subscribeBundle,
   verifyUserPayment,
 } from "../../Redux/Slices/Razorpay";
 import { BiRupee } from "react-icons/bi";
@@ -13,6 +13,7 @@ import HomeLayout from "../../Layouts/HomeLayout.jsx";
 function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [subscribed, setSubscribed] = useState(false);
 
   const razorpayKey = useSelector((state) => state?.razorpay?.key);
   const subscription_id = useSelector(
@@ -25,32 +26,50 @@ function Checkout() {
     razorpay_signature: "",
   };
 
-  async function handleSubscription(e) {
+  async function verifySubscription(e) {
     e.preventDefault();
-    if (!razorpayKey || !subscription_id) {
-      return toast.error("Something went wrong", { id: "subscriptionError" });
+    console.log("subscribed", subscribed);
+    console.log("razorpay key", razorpayKey);
+    console.log("subscription_id", subscription_id);
+    if (!subscribed || !razorpayKey || !subscription_id) {
+      return toast.error("Please Subscribe the course before buying it.", {
+        id: "subscribeCourse",
+        icon: "😣",
+        duration: 2000,
+      });
     }
-
     const options = {
-      key: razorpayKey, // Enter the Key ID generated from the Dashboard
+      key: razorpayKey,
       subscription_id: subscription_id,
-      name: "Coursify Pvt. Ltd",
+      name: "Code Karo Pvt. Ltd",
       description: "Subscription",
       theme: {
         color: "#028195",
       },
       handler: async function (response) {
-        paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
-        paymentDetails.razorpay_signature = response.razorpay_signature;
-        paymentDetails.razorpay_subscription_id =
-          response.razorpay_subscription_id;
+        try {
+          paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
+          paymentDetails.razorpay_signature = response.razorpay_signature;
+          paymentDetails.razorpay_subscription_id =
+            response.razorpay_subscription_id;
 
-        toast.success("Payment successfull");
-        const res = await dispatch(verifyUserPayment(paymentDetails));
+          const res = await dispatch(verifyUserPayment(paymentDetails));
 
-        res?.payload?.success
-          ? navigate("/checkout/success")
-          : navigate("/checkout/fail");
+          if (res?.payload?.success) {
+            navigate("/checkout/success");
+            return toast.success(res?.payload?.message, {
+              id: "paymentSuccess",
+            });
+          } else {
+            navigate("/checkout/fail");
+            return toast.error(err.message, {
+              id: "PaymentFail",
+            });
+          }
+        } catch (error) {
+          console.log("error sending verification request to backend", error);
+          return toast.error(error?.message);
+        }
       },
     };
 
@@ -58,24 +77,32 @@ function Checkout() {
     paymentObject.open();
   }
 
-  async function load() {
-    await dispatch(getRazorPayId());
-    const res = await dispatch(purchaseCourseBundle());
-    console.log(res);
-    console.log(res.payload.success);
-    console.log(res.payload.message);
-  }
-
   useEffect(() => {
-    load();
-  }, []);
+    (async function load() {
+      try {
+        const response = await dispatch(getRazorPayKey());
+        if (response?.payload?.success) {
+          const response1 = await dispatch(subscribeBundle());
+          if (response1?.payload?.success) {
+            setSubscribed(true);
+          }
+        }
+      } catch (error) {
+        console.log(
+          "error while fetching razorpay key and subscribing to the course",
+          error
+        );
+        return toast.error(error?.message);
+      }
+    })();
+  }, [dispatch]);
 
   return (
     <div>
       <HomeLayout>
         <form
           className="h-[90vh] flex items-center justify-center relative text-white"
-          onSubmit={handleSubscription}
+          onSubmit={verifySubscription}
           action=""
         >
           <div className="w-[250px] mt-24 sm:w-80  h-[26rem]  absolute flex flex-col justify-center shadow-[0_0_10px_black] rounded-lg">
@@ -95,17 +122,26 @@ function Checkout() {
               </p>
               <p className="flex items-center justify-center gap-1 text-2xl font-bold text-yellow-500">
                 <BiRupee />
-                <span>499</span> only
+                <span>10</span> only
               </p>
               <div>
                 <p>100% refund on cancellation</p>
                 <p>*Terms and Conditions applied*</p>
               </div>
-              <button
+              {/* <button
                 type="submit"
+                disabled={!subscribed}
                 className="bg-yellow-500 hover:bg-yellow-600 transition-all ease-in-out duration-300 absolute bottom-0 w-full left-0 text-xl font-bold rounded-bl-lg rounded-br-lg py-2"
               >
                 Buy now
+              </button> */}
+              <button
+                type="submit"
+                disabled={!subscribed}
+                className={`transition-all ease-in-out duration-300 absolute bottom-0 w-full left-0 text-xl font-bold rounded-bl-lg rounded-br-lg py-2 
+                  ${subscribed ? "bg-yellow-500 hover:bg-yellow-600": "bg-gray-400 cursor-not-allowed opacity-70"}`}
+              >
+                {subscribed ? "Buy now" : <div className="spinner"></div>}
               </button>
             </div>
           </div>

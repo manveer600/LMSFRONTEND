@@ -3,9 +3,12 @@ import { toast } from "react-hot-toast";
 
 import axiosInstance from "../../Helpers/axiosInstance.js"
 const initialState = {
-    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+    isLoggedIn: Boolean(localStorage.getItem('isLoggedIn')) || false,
     role: localStorage.getItem('role') || "",
     data: localStorage.getItem('data') == "undefined" ? {} : JSON.parse(localStorage.getItem('data'))
+    // isLoggedIn:false,
+    // role:"",
+    // data:{}
 };
 
 export const createAccount = createAsyncThunk('/auth/signup', async (data) => {
@@ -103,7 +106,7 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(createAccount.fulfilled, (state, action) => {
-                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('role', action?.payload?.data?.role);
                 localStorage.setItem('data', JSON.stringify(action?.payload?.data));
 
@@ -112,7 +115,7 @@ const authSlice = createSlice({
                 state.data = action?.payload?.data;
             })
             .addCase(createAccount.rejected, (state, action) => {
-                localStorage.setItem('isLoggedIn', false);
+                localStorage.setItem('isLoggedIn', 'false');
                 localStorage.setItem('role', "");
                 localStorage.setItem('data', JSON.stringify({}));
 
@@ -121,7 +124,7 @@ const authSlice = createSlice({
                 state.data = {};
             })
             .addCase(login.fulfilled, (state, action) => {
-                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('role', action?.payload?.data?.role);
                 localStorage.setItem('data', JSON.stringify(action?.payload?.data));
 
@@ -130,7 +133,7 @@ const authSlice = createSlice({
                 state.data = action?.payload?.data;
             })
             .addCase(login.rejected, (state, action) => {
-                localStorage.setItem('isLoggedIn', false);
+                localStorage.setItem('isLoggedIn', 'false');
                 localStorage.setItem('role', "");
                 localStorage.setItem('data', JSON.stringify({}));
 
@@ -145,7 +148,7 @@ const authSlice = createSlice({
                 state.isLoggedIn = false;
             })
             .addCase(getUserData.fulfilled, (state, action) => {
-                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('role', action?.payload?.data?.role);
                 localStorage.setItem('data', JSON.stringify(action?.payload?.data));
 
@@ -154,8 +157,7 @@ const authSlice = createSlice({
                 state.role = action?.payload?.data?.role;
             })
             .addCase(getUserData.rejected, (state, action) => {
-                console.log('action is this', action);
-                localStorage.setItem('isLoggedIn', false);
+                localStorage.setItem('isLoggedIn', 'false');
                 localStorage.setItem('role', '');
                 localStorage.setItem('data', JSON.stringify({}));
 

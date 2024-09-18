@@ -11,22 +11,24 @@ const initialState = {
 }
 
 
-export const getRazorPayId = createAsyncThunk("/razorpay/getId", async() => {
+export const getRazorPayKey = createAsyncThunk("/razorpay/getId", async() => {
     try{
         const response = await axiosInstance.get('/payments/razorpay-key');
         return response.data;
     }catch(error){
-        toast.error('Failed to load data');
+        console.log('error getting razor pay id', error);
+        toast.error(error.message);
     }
 });
 
 
-export const purchaseCourseBundle = createAsyncThunk('/purchaseCourse', async()=>{
+export const subscribeBundle = createAsyncThunk('/purchaseCourse', async()=>{
     try{
         const response = await axiosInstance.post('/payments/subscribe');
         return response.data;
     }catch(err){
-        toast.error(err?.response?.data?.message);
+        console.log('error subscribing to the course', err);
+        return err;
     }
 })
 
@@ -40,7 +42,8 @@ export const verifyUserPayment = createAsyncThunk('/payments/verify', async(data
         });
         return response.data;
     }catch(err){
-        toast.error(err?.response?.data?.message);
+        console.log('error while verifying payment', err);
+        return err;
     }
 })
 
@@ -56,20 +59,11 @@ export const getPaymentRecord = createAsyncThunk('/payments/record', async()=>{
 
 
 export const cancelCourseBundle = createAsyncThunk('/payments/cancel', async()=>{
-    console.log("cancelling course bundle");
     try{
-        const response = axiosInstance.post('/payments/unsubscribe');
-        console.log('hello g');
-        toast.promise(response,{
-            loading:"Cancelling your subscription...",
-            success:(data)=>{
-                console.log("data is: ", data);
-                return data?.data?.message
-            },
-            error:"Failed to cancel subscription"
-        })
+        const response = await axiosInstance.post('/payments/unsubscribe');
+        return await response?.data;
     }catch(err){
-        console.log("error aagya paaji", err);
+        console.log("error while cancelling subscription", err);
         return toast.error(err?.response?.data?.message);
     }
 })
@@ -81,25 +75,24 @@ const razorpaySlice = createSlice({
     reducers:{},
     extraReducers:(builder) =>{
         builder.
-        addCase(getRazorPayId.fulfilled, (state, action)=>{
-            state.key = action?.payload?.key;
+        addCase(getRazorPayKey.fulfilled, (state, action)=>{
+            state.key = action?.payload?.data;
         })
-        .addCase(purchaseCourseBundle.fulfilled,(state,action)=>{
-            state.subscription_id = action?.payload?.subscription_id;
+        .addCase(subscribeBundle.fulfilled,(state,action)=>{
+            state.subscription_id = action?.payload?.data;
         })
         .addCase(verifyUserPayment.fulfilled, (state,action)=>{
-            toast.success(action?.payload?.message);
             state.isPaymentVerified = action?.payload?.success
         })
         .addCase(verifyUserPayment.rejected, (state,action)=>{
-            toast.success(action?.payload?.message);
             state.isPaymentVerified = action?.payload?.success
         })
         .addCase(getPaymentRecord.fulfilled, (state,action)=>{
             state.allPayments = action?.payload?.allPayments;
             state.finalMonth = action?.payload?.finalMonth;
             state.monthlySalesRecord = action?.payload?.monthlySalesRecord;
-        }).addCase(cancelCourseBundle.fulfilled, (state,action)=> {
+        })
+        .addCase(cancelCourseBundle.fulfilled, (state,action)=> {
             
         })
     }
