@@ -50,7 +50,7 @@ function Contact() {
   }
   return (
     <HomeLayout>
-      <div className="flex flex-col  items-center justify-center p-4 sm:h-[100vh]">
+      <div className="flex flex-col  items-center justify-center h-full p-4 sm:h-[100vh]">
         <form
           noValidate
           onSubmit={(e) => onFormSubmit(e, userInput)}
