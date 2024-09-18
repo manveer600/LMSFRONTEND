@@ -105,7 +105,7 @@ function Checkout() {
           onSubmit={verifySubscription}
           action=""
         >
-          <div className=" mt-24  ml-3 mr-3  flex flex-col gap-4  sm:shadow-[0_0_10px_black] rounded-lg">
+          <div className=" h-[90vh] mt-24  ml-3 mr-3  flex flex-col gap-4  sm:shadow-[0_0_10px_black] rounded-lg">
             <h1 className="bg-yellow-500 flex items-start justify-center border w-full text-center py-4 text-xl sm:text-2xl font-bold rounded-t-lg ">
               Subscription Bundle
             </h1>
