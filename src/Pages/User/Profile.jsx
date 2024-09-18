@@ -80,30 +80,31 @@ export function Profile() {
                       userData?.subscription?.status === "active")
                       ? "ACTIVE"
                       : "INACTIVE"}
-                    {role === "USER" &&
-                    userData?.subscription?.status === "active" ? (
-                      <div
-                        onClick={!isLoading ? handleCancellation : null}
-                        className={`px-3 m-auto lg:mx-0 mt-2 py-2 rounded w-fit text-lg ${
-                          isLoading
-                            ? "bg-gray-400 cursor-not-allowed"
-                            : "hover:bg-yellow-300 bg-yellow-500 cursor-pointer"
-                        } text-black`}
-                      >
-                        {isLoading ? (
-                          <div className="spinner"></div>
-                        ) : (
-                          "Cancel Subscription"
-                        )}
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => navigate("/courses")}
-                        className="px-3 m-auto lg:mx-0 mt-2 py-2 text-black rounded w-fit text-lg hover:bg-yellow-300 bg-yellow-500 cursor-pointer"
-                      >
-                        Buy Subscription
-                      </div>
-                    )}
+                    {role === "USER" ? (
+                      userData?.subscription?.status === "active" ? (
+                        <div
+                          onClick={!isLoading ? handleCancellation : null}
+                          className={`px-3 m-auto lg:mx-0 mt-2 py-2 rounded w-fit text-lg ${
+                            isLoading
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "hover:bg-yellow-300 bg-yellow-500 cursor-pointer"
+                          } text-black`}
+                        >
+                          {isLoading ? (
+                            <div className="spinner"></div>
+                          ) : (
+                            "Cancel Subscription"
+                          )}
+                        </div>
+                      ) : (
+                        <div
+                          onClick={() => navigate("/courses")}
+                          className="px-3 m-auto lg:mx-0 mt-2 py-2 text-black rounded w-fit text-lg hover:bg-yellow-300 bg-yellow-500 cursor-pointer"
+                        >
+                          Buy Subscription
+                        </div>
+                      )
+                    ) : null}
                   </span>
                 </h4>
               </div>
