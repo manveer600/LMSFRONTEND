@@ -211,8 +211,8 @@ function AboutUs() {
             Success Stories
           </h1>
 
-          <div className="flex first-letter:h-[500px] space-x-[100px] p-10 w-[90vw] overflow-x-scroll no-scrollbar ">
-            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+          <div className="flex  first-letter:h-[500px] space-x-[100px] p-10 w-[90vw] overflow-x-scroll no-scrollbar ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 60% increment
               </h1>
@@ -243,7 +243,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 7-12LPA(FRESHER)
               </h1>
@@ -274,7 +274,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 60% increment
               </h1>
@@ -305,7 +305,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 24LPA
               </h1>
@@ -334,7 +334,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 250% increment
               </h1>
@@ -365,7 +365,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] p-2 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 1L/PM
               </h1>
@@ -396,7 +396,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] p-1 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 60% increment
               </h1>
@@ -427,7 +427,7 @@ function AboutUs() {
               </div>
             </div>
 
-            <div className="h-[450px] p-1 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
+            <div className="h-[450px] p-3 sm:p-4 sm:w-[400px] shadow-[0_0_10px_black] ">
               <h1 className="flex justify-center text-yellow-400 items-center h-10 shadow-[0_0_10px_black] bg-gray-500 rounded-tl-lg  font-bold text-2xl">
                 22LPA
               </h1>
