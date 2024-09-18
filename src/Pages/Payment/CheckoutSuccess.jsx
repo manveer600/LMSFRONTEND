@@ -12,9 +12,9 @@ function CheckoutSuccess() {
 
     return (
         <HomeLayout>
-            <div className="min-h-[90vh] flex items-center justify-center text-white">
-                <div className="w-[250px] sm:w-80 h-[26rem] flex flex-col justify-center items-center shadow-[0_0_10px_black] mt-20 text-center rounded-lg relative">
-                    <h1 className="bg-green-500 absolute text-center top-0 w-full py-4 text-2xl font-bold rounded-tl-lg rounded-tr-lg">Payment Successfull</h1>
+            <div className=" flex items-center justify-center text-white">
+                <div className=" h-[26rem] flex flex-col justify-center items-center shadow-[0_0_10px_black] mt-20 text-center rounded-lg relative">
+                    <h1 className="bg-green-500 absolute text-center top-0 w-full py-4 text-2xl font-bold rounded-tl-lg rounded-tr-lg">Payment Verfied.</h1>
 
                     <div className="px-4 flex flex-col items-center justify-center space-y-2">
                         <div className="text-center space-y-2">

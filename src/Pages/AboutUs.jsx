@@ -237,9 +237,6 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
               </div>
             </div>
 
@@ -268,9 +265,7 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
+                
               </div>
             </div>
 
@@ -299,9 +294,7 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
+              
               </div>
             </div>
 
@@ -328,9 +321,7 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
+    
               </div>
             </div>
 
@@ -359,9 +350,7 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
+                
               </div>
             </div>
 
@@ -390,9 +379,6 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
               </div>
             </div>
 
@@ -421,9 +407,6 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
               </div>
             </div>
 
@@ -452,9 +435,6 @@ function AboutUs() {
                   debitis necessitatibus asperiores ea aut, numquam quia
                   repellat fuga amet doloribus expedita odit. Obcaecati?
                 </p>
-                <section className="mt-3">
-                  From good company to bad company
-                </section>
               </div>
             </div>
           </div>

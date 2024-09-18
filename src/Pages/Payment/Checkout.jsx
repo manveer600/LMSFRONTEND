@@ -101,24 +101,24 @@ function Checkout() {
     <div>
       <HomeLayout>
         <form
-          className="h-[90vh] flex items-center justify-center relative text-white"
+          className="h-full flex items-center justify-center text-white"
           onSubmit={verifySubscription}
           action=""
         >
-          <div className="w-[250px] mt-24 sm:w-80  h-[26rem]  absolute flex flex-col justify-center shadow-[0_0_10px_black] rounded-lg">
-            <h1 className="bg-yellow-500  absolute top-0 w-full text-center py-4 text-xl sm:text-2xl font-bold rounded-tl0lg rounded-lg">
+          <div className=" mt-24  ml-3 mr-3  flex flex-col gap-4  sm:shadow-[0_0_10px_black] rounded-lg">
+            <h1 className="bg-yellow-500 flex items-start justify-center border w-full text-center py-4 text-xl sm:text-2xl font-bold rounded-t-lg ">
               Subscription Bundle
             </h1>
 
             <div className="px-4 mt-4 space-y-5 text-center">
               <p className="text-[17px]">
                 This purchase will allow you to access all available course of
-                our platform fo{" "}
+                our platform for{" "}
                 <span className="text-yellow-500 font-bold">
-                  <br />1 Year duration
+                  <br />1 Year
                 </span>
                 . All the existing and new launched courses will be also
-                available
+                available for
               </p>
               <p className="flex items-center justify-center gap-1 text-2xl font-bold text-yellow-500">
                 <BiRupee />
@@ -128,22 +128,16 @@ function Checkout() {
                 <p>100% refund on cancellation</p>
                 <p>*Terms and Conditions applied*</p>
               </div>
-              {/* <button
-                type="submit"
-                disabled={!subscribed}
-                className="bg-yellow-500 hover:bg-yellow-600 transition-all ease-in-out duration-300 absolute bottom-0 w-full left-0 text-xl font-bold rounded-bl-lg rounded-br-lg py-2"
-              >
-                Buy now
-              </button> */}
               <button
                 type="submit"
                 disabled={!subscribed}
-                className={`transition-all ease-in-out duration-300 absolute bottom-0 w-full left-0 text-xl font-bold rounded-bl-lg rounded-br-lg py-2 
+                className={`transition-all ease-in-out duration-300  bottom-0 w-full left-0 text-xl font-bold rounded-bl-lg rounded-br-lg py-2 
                   ${subscribed ? "bg-yellow-500 hover:bg-yellow-600": "bg-gray-400 cursor-not-allowed opacity-70"}`}
               >
                 {subscribed ? "Buy now" : <div className="spinner"></div>}
               </button>
             </div>
+
           </div>
         </form>
       </HomeLayout>

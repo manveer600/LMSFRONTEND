@@ -14,18 +14,20 @@ export function Profile() {
   const role = useSelector((state) => state?.auth.role);
   const [isLoading, setIsLoading] = useState(false);
   async function handleCancellation() {
-    setIsLoading(true);
-    const response = await dispatch(cancelCourseBundle());
-    if (response?.payload?.success) {
-      toast.success(response?.payload?.message, {
-        id: "cancelCourse",
-        icon: "🎉",
-        duration: 2000,
-      });
+    if (window.confirm("Are you sure, you want to cancel the subscription?")) {
+      setIsLoading(true);
+      const response = await dispatch(cancelCourseBundle());
+      if (response?.payload?.success) {
+        toast.success(response?.payload?.message, {
+          id: "cancelCourse",
+          icon: "🎉",
+          duration: 2000,
+        });
+      }
+      await dispatch(getUserData());
+      setIsLoading(false);
+      navigate("/");
     }
-    await dispatch(getUserData());
-    setIsLoading(false);
-    navigate("/");
   }
   return (
     <HomeLayout>
