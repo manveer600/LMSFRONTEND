@@ -80,7 +80,7 @@ function AddLecture() {
   return (
     <div>
       <HomeLayout>
-        <div className="min-h-[90vh] text-white flex flex-col items-center justify-center gap-10 p-2">
+        <div className="min-h-[90vh] text-white flex flex-col items-center justify-center gap-10 p-5">
           <div className=" mt-20 underline text-3xl font-bold font-serif text-red-500 text-center ">
             {courseDetails?.title}
           </div>

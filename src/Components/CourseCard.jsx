@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
   deleteCourse,
-  getAllCourses,
+  getCourses,
   updateCourse,
 } from "../Redux/Slices/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,7 +49,7 @@ function CourseCard({ data }) {
       window.confirm(`Are you sure you want to delete ${data.title} course?`)
     ) {
       await dispatch(deleteCourse(data._id));
-      await dispatch(getAllCourses());
+      await dispatch(getCourses());
     }
   }
 
