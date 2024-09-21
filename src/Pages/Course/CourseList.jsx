@@ -46,8 +46,8 @@ function CourseList() {
             Seach Your Course:{" "}
           </label>
           <input
-            className="px-2 bg-transparent border rounded-sm"
-            placeholder="Search your fav Course"
+            className="px-2 sm:w-[22rem] bg-transparent border rounded-sm"
+            placeholder="Search Course by title, instructor, category, etc."
             onChange={getCourse}
           />
         </div>
