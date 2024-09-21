@@ -17,9 +17,18 @@ export const createAccount = createAsyncThunk('/auth/signup', async (data) => {
         return await res.data;
     }
     catch (error) {
-        toast.error(error?.response?.data?.message, {
+        return toast.error(error?.response?.data?.message, {
             id: "signupError"
         });
+    }
+})
+
+export const generateOTP = createAsyncThunk('/user/generateOTP', async (data) => {
+    try {
+        const res = await axiosInstance.post("user/generateOtp", data);
+        return await res.data;
+    } catch (error) {
+        return toast.error(error?.message, { id: 'otpError' });
     }
 })
 

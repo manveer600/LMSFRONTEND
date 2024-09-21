@@ -22,6 +22,7 @@ import DisplayLectures from "./Pages/Dashboard/DisplayLectures.jsx";
 import ForgotPassword from "./Pages/User/ForgotPassword.jsx";
 import ResetPasswordPage from "./Pages/User/ResetPassword.jsx";
 import FavouriteCourseList from "./Pages/Course/FavouriteCourseList.jsx";
+import { VerifyOTP } from "./Pages/User/OneTimePassword.jsx";
 function App() {
   return (
     <>
@@ -49,6 +50,7 @@ function App() {
         <Route path="/course/addLecture" element={<AddLecture />} />
         <Route path="/user/forgotpassword" element={<ForgotPassword />} />
         <Route path="/favCourses" element={<FavouriteCourseList />} />
+        <Route path="/verifyOTP" element={<VerifyOTP />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

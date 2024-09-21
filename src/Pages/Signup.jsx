@@ -3,7 +3,7 @@ import { BsPersonAdd } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import HomeLayout from "../Layouts/HomeLayout";
-import { createAccount } from "../Redux/Slices/AuthSlice";
+import { createAccount, generateOTP } from "../Redux/Slices/AuthSlice";
 import { FaRegEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { useForm } from "react-hook-form";
@@ -38,23 +38,36 @@ function Signup() {
   }
 
   async function createNewAccount(data) {
-    console.log('data is this', data);
+    console.log("data is this", data);
+
     if (!data.avatar) {
       return toast.error("Profile Image is required💀", {
         id: "profile",
-        duration:2000
+        duration: 2000,
       });
     }
-    setIsLoading(true);
 
+    
     const formData = new FormData();
     formData.append("fullName", data.fullName);
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("avatar", data.avatar);
-
-    const response = await dispatch(createAccount(formData));
-    if (response?.payload?.success) navigate("/user/profile");
+    
+    setIsLoading(true);
+    const response = await dispatch(generateOTP({ email: data.email }));
+    if (response?.payload?.success) {
+      formData.append("otp", response.payload.data);
+      const plainFormData = {};
+      for (let pair of formData.entries()) {
+        plainFormData[pair[0]] = pair[1];
+      }
+      navigate("/verifyOTP", { state: plainFormData });
+    } else {
+      return toast.error("Unable to sign you up right now. Please try later", {
+        id: "error",
+      });
+    }
     setIsLoading(false);
   }
 
@@ -66,7 +79,9 @@ function Signup() {
           onSubmit={handleSubmit(createNewAccount)}
           className=" mt-14 flex flex-col  justify-center gap-3 space-y-2 rounded-lg p-4 text-white  sm:w-96 sm:shadow-[0_0_10px_black]"
         >
-          <h1 className="text-center text-2xl font-bold font-serif underline ">Registration Page</h1>
+          <h1 className="text-center text-2xl font-bold font-serif underline ">
+            Registration Page
+          </h1>
 
           {/* Image Uploading */}
           <div>
