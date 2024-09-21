@@ -34,12 +34,11 @@ function HomeLayout({ children }) {
   }
 
   async function handleLogout(e) {
-
     const res = await dispatch(logout());
 
     if (res?.payload?.success) navigate("/");
   }
-  
+
   function handleOverlayClick(event) {
     if (drawerRef.current && !drawerRef.current.contains(event.target)) {
       hideDrawer();
@@ -49,7 +48,7 @@ function HomeLayout({ children }) {
   return (
     <div className=" font-serif bg-gray-800 " onClick={handleOverlayClick}>
       <div className="z-10 drawer  absolute w-fit" ref={drawerRef}>
-        <input className="drawer-toggle  "  id="my-drawer" type="checkbox" />
+        <input className="drawer-toggle  " id="my-drawer" type="checkbox" />
 
         <div className="drawer-content ">
           <label htmlFor="my-drawer" className="cursor-pointer relative">
@@ -81,18 +80,21 @@ function HomeLayout({ children }) {
               </li>
             )}
 
-            {
-              isLoggedIn && role === "ADMIN" && (
-                <li>
-                  <Link to="/course/create">Create Course</Link>
-                </li>
-              )
-            }
+            {isLoggedIn && role === "ADMIN" && (
+              <li>
+                <Link to="/course/create">Create Course</Link>
+              </li>
+            )}
 
             <li>
               <Link to="/courses">All Courses</Link>
             </li>
-
+            {
+              isLoggedIn && 
+              <li>
+                <Link to="/favCourses">Favourite Courses</Link>
+              </li>
+            }
             <li>
               <Link to="/contact">Contact Us</Link>
             </li>

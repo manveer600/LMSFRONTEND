@@ -67,6 +67,7 @@ export const updateProfile = createAsyncThunk('/user/update/profile', async (dat
 })
 
 export const getUserData = createAsyncThunk('/user/details', async () => {
+    console.log('getting')
     try {
         const res = await axiosInstance.get('user/me');
         return await res.data;

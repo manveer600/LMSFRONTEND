@@ -7,8 +7,6 @@ const initialState = {
 }
 
 export const getAllCourses = createAsyncThunk('/course/get', async (data) => {
-    console.log('data is this', data);
-    console.log('fetching courses');
     try {
         const response = await axiosInstance.get(`/courses?title=${data.title}`);
         return await response.data.data;
@@ -26,6 +24,15 @@ export const getCourses = createAsyncThunk('/course/get', async () => {
     }
 })
 
+
+export const updateCourse = createAsyncThunk('/course/addToFav', async (id) => {
+    try {
+        const response = await axiosInstance.put(`/courses/fav/${id}`);
+        return await response.data;
+    } catch (err) {
+        toast.error(err?.response?.data?.message);
+    }
+})
 
 
 export const deleteCourse = createAsyncThunk('/course/delete', async (id) => {
@@ -81,18 +88,18 @@ const courseSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getAllCourses.fulfilled, (state, action) => {
-                if (action?.payload) {
-                    console.log('action is', action);
-                    console.log(action.payload);
-                    state.courseData = [...action.payload];
-                }
+                state.courseData = [...action.payload];
             })
             .addCase(deleteAllCourses.fulfilled, (state, action) => {
-                if (action?.payload) {
-                    console.log('action is', action);
-                    console.log(action.payload);
-                    state.courseData = [];
-                }
+                state.courseData = [];
+            }).
+            addCase(updateCourse.fulfilled, (state, action) => {
+                let courseIndex = state.courseData.findIndex((course) => course._id == action.payload.data._id);
+                if (courseIndex != -1) {
+                    console.log(courseIndex);
+                    state.courseData[courseIndex] = action?.payload?.data;
+                }else 
+                console.log('course not found with the given id');
             })
     }
 })

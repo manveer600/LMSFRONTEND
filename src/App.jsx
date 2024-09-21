@@ -20,8 +20,8 @@ import AddLecture from "./Pages/Dashboard/AddLecture.jsx";
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard.jsx";
 import DisplayLectures from "./Pages/Dashboard/DisplayLectures.jsx";
 import ForgotPassword from "./Pages/User/ForgotPassword.jsx";
-import FavouriteCourses from "./Pages/Course/FavouriteCourses.jsx";
 import ResetPasswordPage from "./Pages/User/ResetPassword.jsx";
+import FavouriteCourseList from "./Pages/Course/FavouriteCourseList.jsx";
 function App() {
   return (
     <>
@@ -48,7 +48,7 @@ function App() {
         <Route path="/course/displayLectures" element={<DisplayLectures />} />
         <Route path="/course/addLecture" element={<AddLecture />} />
         <Route path="/user/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/favCourses" element={<FavouriteCourses />} />
+        <Route path="/favCourses" element={<FavouriteCourseList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -60,7 +60,7 @@ function Signup() {
 
   return (
     <HomeLayout>
-      <div className="flex items-center justify-center sm:h-[90vh]">
+      <div className="flex items-center justify-center h-[90vh]">
         <form
           noValidate
           onSubmit={handleSubmit(createNewAccount)}

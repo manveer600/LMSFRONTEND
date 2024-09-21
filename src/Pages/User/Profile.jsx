@@ -4,15 +4,33 @@ import HomeLayout from "../../Layouts/HomeLayout";
 import { cancelCourseBundle } from "../../Redux/Slices/Razorpay";
 import { getUserData } from "../../Redux/Slices/AuthSlice";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state?.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
   const userData = useSelector((state) => state?.auth?.data);
   const role = useSelector((state) => state?.auth.role);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await dispatch(getUserData());
+        if (!response?.payload?.success) {
+          console.error("Failed to fetch user data");
+          toast.error("Failed to load profile");
+        }
+      } catch (error) {
+        console.error("Error fetching user data", error);
+        toast.error("Something went wrong");
+      }
+    };
+
+    fetchUserData();
+  }, [dispatch]);
+
   async function handleCancellation() {
     if (window.confirm("Are you sure, you want to cancel the subscription?")) {
       setIsLoading(true);
@@ -31,7 +49,7 @@ export function Profile() {
   }
   return (
     <HomeLayout>
-      {isLoggedIn == true ? (
+      {isLoggedIn ? (
         <div className="min-h-[90vh] border-green-600 w-full flex flex-col lg:flex-row items-center justify-center">
           {/* left div for profile picture */}
           <div className="lg:w-1/2 flex flex-col  items-center lg:items-end mt-20 mb-10 w-full p-3">

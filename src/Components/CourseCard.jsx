@@ -1,94 +1,86 @@
 import { useNavigate } from "react-router-dom";
-import { deleteCourse, getAllCourses } from "../Redux/Slices/CourseSlice";
+import {
+  deleteCourse,
+  getAllCourses,
+  updateCourse,
+} from "../Redux/Slices/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosHeart } from "react-icons/io";
-import {
-  addToFavourites,
-  getAllFavCourses,
-  removeFromFavourites,
-} from "../Redux/Slices/FavouriteCourseReducer";
-import toast from "react-hot-toast";
+import { CiHeart } from "react-icons/ci";
 import { useEffect, useState } from "react";
-
+import toast from "react-hot-toast";
+import { getUserData } from "../Redux/Slices/AuthSlice";
 function CourseCard({ data }) {
-  function getFavCoursesFromLocal() {
-    const favCourses = localStorage.getItem("favouriteCourses");
-    return favCourses ? JSON.parse("favCourses") : [];
-    // console.log("favCourses", favCourses);
-  }
-
-  const [favCourses, setFavCourses] = useState(getFavCoursesFromLocal());
-  console.log("data is", data);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // console.log("course card", data);
+
+  const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
   const userData = useSelector((state) => state?.auth?.data);
   const courses = useSelector((state) => state?.course?.courseData);
-  const navigate = useNavigate();
-  console.log("courses", courses);
+
+  const [favCourse, setIsFavCourse] = useState({
+    courseId: data._id,
+    userId: userData._id,
+    fav: currentFavCourseVal() || false,
+  });
+
+  console.log('FAV COURSE INITIALLY', favCourse);
+
+  function currentFavCourseVal() {
+    try {
+      const courseIndex = courses.findIndex((cou) => cou._id == data._id);
+      console.log("courseIndex is this", courseIndex);
+      const favCourseArray = courses[courseIndex].favCourse;
+      const favCourseIndex = favCourseArray.findIndex(
+        (favCou) => favCou.userId.toString() == userData._id.toString()
+      );
+      console.log('favcourseindex', favCourseIndex, " ", courseIndex);
+      console.log('jo mujhe chahiye',favCourseArray[favCourseIndex].value);
+      return favCourseArray[favCourseIndex].value;
+    } catch (error) {
+      console.log("error while updating fav course", error);
+      return false;
+    }
+  }
+
   async function handleDeleteCourse() {
     if (
       window.confirm(`Are you sure you want to delete ${data.title} course?`)
     ) {
-      console.log(data);
       await dispatch(deleteCourse(data._id));
       await dispatch(getAllCourses());
     }
   }
 
-  async function addCoursesToFavourites() {
-    // let favourite = localStorage.getItem('favourite');
-    // console.log(typeof(favourite));
-    // const favBool = JSON.parse(favourite);
-    // console.log(typeof(favBool));
-    // console.log(favBool);
-    // if(favBool === false){
-    //   console.log('bhai chal jaa');
-    //   // favourite me add krdoh
-    //   const res = await dispatch(addToFavourites(data._id));
-    //   if(res?.payload?.success){
-    //     toast.success(`${data.title} added to favourites`);
-    //   }
-    // }
-    // else if(favBool === true){
-    //   // remove from favourites
-    //   try{
-    //     const response = await dispatch(removeFromFavourites(data._id));
-    //     await dispatch(getAllFavCourses());
-    //     console.log('kuch toh chahta hoon', response);
-    //     if(response?.payload?.success){
-    //       toast.success(`Removed ${data.title} from favourites`);
-    //     }
-    //   }catch(e){
-    //     console.log(e);
-    //   }
-
-    // }
-    // const favBoolReverse = !favBool;
-    // const favBoolString = JSON.stringify(favBoolReverse);
-    // localStorage.setItem("favourite", favBoolString);
-
-    const updatedFavorites = [...favCourses, data];
-    setFavCourses(updatedFavorites);
-    localStorage.setItem("favoriteCourses", JSON.stringify(updatedFavorites));
+  async function updateFavCourse(e, data) {
+    e.stopPropagation();
+    if (!isLoggedIn) {
+      return toast.error("Kindly login to mark a course as favorite.", {
+        id: "favCourse",
+      });
+    }
+    const response = await dispatch(updateCourse(data._id));
+    // console.log(response);
+    if (response?.payload?.success) {
+      setIsFavCourse({
+        courseId: response?.payload?.data?._id,
+        userId: response?.payload?.favCourseData?.userId,
+        fav: response?.payload?.favCourseData?.value,
+      });
+    }
   }
-  // manveer make function to get favorites from local storage like this
-  // const getFavoritesFromLocal = () => {
-  //   const favorites = localStorage.getItem('favoriteCourses');
-  //   return favorites ? JSON.parse(favorites) : [];
-  // };
 
-  // function CourseCard({ data }) {
-  //  //create a state .. .
-  //   const [favoriteCourses, setFavoriteCourses] = useState(getFavoritesFromLocal());
+  useEffect(() => {
+    (async function instant() {
+      await dispatch(getUserData());
+    })();
+  }, [dispatch]);
 
-  //   const addCourseToFavorites = () => {
-  //     const updatedFavorites = [...favoriteCourses, data];
-  //     setFavoriteCourses(updatedFavorites);
-  //     localStorage.setItem('favoriteCourses', JSON.stringify(updatedFavorites));
-  //   };
-
+  // console.log("favCourse", favCourse);
   return (
     // <div className="relative">
-    <div className="text-white p-2 w-[22rem] rounded-lg cursor-pointer  overflow-hidden bg-zinc-700">
+    <div className="text-white relative  p-2 w-[22rem] rounded-lg cursor-pointer  overflow-hidden bg-zinc-700">
       <div
         className="overflow-hidden "
         onClick={() => navigate("/course/description", { state: { ...data } })}
@@ -101,6 +93,20 @@ function CourseCard({ data }) {
         <div className="p-3 space-y-1 text-white">
           <h2 className="text-xl font-bold text-yellow-500 line-clamp-2">
             {data?.title}
+            {isLoggedIn &&
+              data._id == favCourse.courseId &&
+              userData._id == favCourse.userId &&
+              (favCourse.fav == false ? (
+                <CiHeart
+                  className="inline h-7 w-7"
+                  onClick={(e) => updateFavCourse(e, data)}
+                />
+              ) : (
+                <IoIosHeart
+                  className="inline h-7 w-7"
+                  onClick={(e) => updateFavCourse(e, data)}
+                />
+              ))}
           </h2>
           <p className=" truncate">{data?.description}</p>
           <p className="font-semibold">
@@ -126,7 +132,6 @@ function CourseCard({ data }) {
         </button>
       )}
     </div>
-    // </div>
   );
 }
 

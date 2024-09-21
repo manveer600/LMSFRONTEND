@@ -80,11 +80,11 @@ function AddLecture() {
   return (
     <div>
       <HomeLayout>
-        <div className="min-h-[90vh] text-white flex flex-col items-center justify-center gap-10 mx-16">
+        <div className="min-h-[90vh] text-white flex flex-col items-center justify-center gap-10 p-2">
           <div className=" mt-20 underline text-3xl font-bold font-serif text-red-500 text-center ">
             {courseDetails?.title}
           </div>
-          <div className="flex flex-col gap-5 p-2 shadow-[0_0_10px_black]  sm:w-96 rounded-lg">
+          <div className="flex flex-col gap-5 p-2 shadow-[0_0_10px_black] w-full sm:w-96 rounded-lg">
             <header className="flex items-center justify-center relative">
               <button
                 className="absolute  left-1 sm:left-2 text-xl text-green-500"
@@ -92,7 +92,7 @@ function AddLecture() {
               >
                 <AiOutlineArrowLeft />
               </button>
-              <h1 className="text-xl text-yellow-500 font-semibold">
+              <h1 className="text-xl sm:text-2xl text-yellow-500 font-semibold">
                 Add new lecture
               </h1>
             </header>
