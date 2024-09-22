@@ -6,12 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Footer from "../Components/Footer";
-import { logout } from "../Redux/Slices/AuthSlice";
-import { useRef, useState } from "react";
+import { getUserData, logout } from "../Redux/Slices/AuthSlice";
+import { useEffect, useRef, useState } from "react";
 
 function HomeLayout({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const drawerRef = useRef();
 
@@ -34,8 +35,9 @@ function HomeLayout({ children }) {
   }
 
   async function handleLogout(e) {
+    setIsLoading(true);
     const res = await dispatch(logout());
-
+    setIsLoading(false);
     if (res?.payload?.success) navigate("/");
   }
 
@@ -44,6 +46,12 @@ function HomeLayout({ children }) {
       hideDrawer();
     }
   }
+
+  useEffect(() => {
+    (async function () {
+      await dispatch(getUserData());
+    })();
+  }, [dispatch, isLoggedIn]);
 
   return (
     <div className=" font-serif bg-gray-800 " onClick={handleOverlayClick}>
@@ -89,12 +97,11 @@ function HomeLayout({ children }) {
             <li>
               <Link to="/courses">All Courses</Link>
             </li>
-            {
-              isLoggedIn && 
+            {isLoggedIn && (
               <li>
                 <Link to="/favCourses">Favourite Courses</Link>
               </li>
-            }
+            )}
             <li>
               <Link to="/contact">Contact Us</Link>
             </li>
@@ -102,10 +109,6 @@ function HomeLayout({ children }) {
             <li>
               <Link to="/about">About Us</Link>
             </li>
-
-            {/* {isLoggedIn && role === 'USER' && <li>
-              <Link to="/favCourses">My Favourite Courses</Link>
-            </li>} */}
 
             {!isLoggedIn && (
               <li className=" absolute bottom-4 w-[90%]">
@@ -126,8 +129,13 @@ function HomeLayout({ children }) {
                   <button className="btn-primary px-4 py-1 font-semibold rounded-md w-full">
                     <Link to="/user/profile">Profile</Link>
                   </button>
-                  <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full">
-                    <Link onClick={handleLogout}>Logout</Link>
+                  <button
+                    disabled={isLoading}
+                    onClick={handleLogout}
+                    className="btn-secondary px-4 py-1 font-semibold rounded-md w-full"
+                  >
+                    {/* <Link onClick={handleLogout}>Logout</Link> */}
+                    {isLoading ? <div className="spinner"></div> : "Logout"}
                   </button>
                 </div>
               </li>

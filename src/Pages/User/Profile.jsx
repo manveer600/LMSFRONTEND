@@ -14,22 +14,22 @@ export function Profile() {
   const role = useSelector((state) => state?.auth.role);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await dispatch(getUserData());
-        if (!response?.payload?.success) {
-          console.error("Failed to fetch user data");
-          toast.error("Failed to load profile");
-        }
-      } catch (error) {
-        console.error("Error fetching user data", error);
-        toast.error("Something went wrong");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await dispatch(getUserData());
+  //       if (!response?.payload?.success) {
+  //         console.error("Failed to fetch user data");
+  //         toast.error("Failed to load profile");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data", error);
+  //       toast.error("Something went wrong");
+  //     }
+  //   };
 
-    fetchUserData();
-  }, [dispatch]);
+  //   fetchUserData();
+  // }, [dispatch]);
 
   async function handleCancellation() {
     if (window.confirm("Are you sure, you want to cancel the subscription?")) {

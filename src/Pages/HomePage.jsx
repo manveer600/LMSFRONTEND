@@ -4,16 +4,16 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { getUserData } from "../Redux/Slices/AuthSlice";
 function HomePage() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
   console.log('isLogged IN',isLoggedIn);
   console.log(typeof(isLoggedIn));
 
-  useEffect(() => {
-    (async function () {
-      await dispatch(getUserData());
-    })();
-  }, [dispatch, isLoggedIn]);
+  // useEffect(() => {
+  //   (async function () {
+  //     await dispatch(getUserData());
+  //   })();
+  // }, [dispatch, isLoggedIn]);
   return (
     <HomeLayout>
       {/* main div */}

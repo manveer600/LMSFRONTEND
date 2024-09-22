@@ -71,11 +71,11 @@ function CourseCard({ data }) {
     }
   }
 
-  useEffect(() => {
-    (async function instant() {
-      await dispatch(getUserData());
-    })();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   (async function instant() {
+  //     await dispatch(getUserData());
+  //   })();
+  // }, [dispatch]);
 
   // console.log("favCourse", favCourse);
   return (

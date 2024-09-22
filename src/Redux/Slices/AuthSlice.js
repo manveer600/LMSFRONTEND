@@ -6,9 +6,6 @@ const initialState = {
     isLoggedIn: Boolean(localStorage.getItem('isLoggedIn')) || false,
     role: localStorage.getItem('role') || "",
     data: localStorage.getItem('data') == "undefined" ? {} : JSON.parse(localStorage.getItem('data'))
-    // isLoggedIn:false,
-    // role:"",
-    // data:{}
 };
 
 export const createAccount = createAsyncThunk('/auth/signup', async (data) => {
@@ -48,20 +45,20 @@ export const login = createAsyncThunk('/auth/login', async (data) => {
 
 export const logout = createAsyncThunk('/auth/logout', async () => {
     try {
-        const res = axiosInstance.get("user/logout");
+        const res = await axiosInstance.get("user/logout");
 
-        toast.promise(res, {
-            loading: "Wait! Logging You out.....",
-            success: (data) => {
-                return data?.data?.message;
-            },
-            error: "Failed to logout",
-        });
-        return (await res).data;
+        // toast.promise(res, {
+        //     loading: "Wait! Logging You out.....",
+        //     success: (data) => {
+        //         return data?.data?.message;
+        //     },
+        //     error: "Failed to logout",
+        // });
+        return await res.data;
     }
     catch (error) {
-        toast.error(error?.response?.data?.message);
-        return;
+        return toast.error(error?.response?.data?.message);
+        
     }
 })
 
@@ -158,6 +155,7 @@ const authSlice = createSlice({
                 state.isLoggedIn = false;
             })
             .addCase(getUserData.fulfilled, (state, action) => {
+                console.log('fulfilled');
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('role', action?.payload?.data?.role);
                 localStorage.setItem('data', JSON.stringify(action?.payload?.data));
@@ -167,6 +165,7 @@ const authSlice = createSlice({
                 state.role = action?.payload?.data?.role;
             })
             .addCase(getUserData.rejected, (state, action) => {
+                console.log('rejected');
                 localStorage.setItem('isLoggedIn', 'false');
                 localStorage.setItem('role', '');
                 localStorage.setItem('data', JSON.stringify({}));

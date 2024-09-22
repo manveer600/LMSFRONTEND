@@ -77,74 +77,72 @@ export function EditProfile() {
   }
 
   return (
-    <div>
-      <HomeLayout>
-        <div className="flex items-center justify-center min-h-[90vh]">
-          <form
-            noValidate
-            onSubmit={onFormSubmit}
-            className="flex mt-14 flex-col justify-center gap-5 rounded-lg p-4 text-white sm:w-80 min-h-[26rem] shadow-[0_0_10px_black]"
-          >
-            <h1 className="text-center text-2xl font-semibold font-serif">
-              Edit profile
-            </h1>
+    <HomeLayout>
+      <div className="flex items-center justify-center min-h-[90vh]">
+        <form
+          noValidate
+          onSubmit={onFormSubmit}
+          className="flex mt-14 flex-col justify-center gap-5 rounded-lg p-4 text-white sm:w-80 min-h-[26rem] shadow-[0_0_10px_black]"
+        >
+          <h1 className="text-center text-2xl font-semibold font-serif">
+            Edit profile
+          </h1>
 
-            {/* IMAGE UPLOADING */}
-            <label htmlFor="image_uploads" className="cursor-pointer">
-              {data.previewImage ? (
-                <img
-                  className="w-28 h-28 rounded-full m-auto"
-                  src={data.previewImage}
-                  alt=""
-                />
-              ) : (
-                <BsPersonCircle className="w-28 h-28 rounded-full m-auto" />
-              )}
-            </label>
-            <input
-              type="file"
-              className="hidden"
-              onChange={handleImageUpload}
-              id="image_uploads"
-              name="image_uploads"
-              accept=".jpg, .png, .svg, .jpeg"
-            />
-
-            {/* UPDATING THE FULL NAME */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="fullName" className="text-lg font-semibold">
-                Full Name
-              </label>
-
-              <input
-                onChange={handleInputChange}
-                required
-                type="text"
-                name="fullName"
-                value={data.fullName}
-                id="fullName"
-                placeholder="Enter your name"
-                className="bg-transparent border px-2 py-1"
+          {/* IMAGE UPLOADING */}
+          <label htmlFor="image_uploads" className="cursor-pointer">
+            {data.previewImage ? (
+              <img
+                className="w-28 h-28 rounded-full m-auto"
+                src={data.previewImage}
+                alt=""
               />
-            </div>
+            ) : (
+              <BsPersonCircle className="w-28 h-28 rounded-full m-auto" />
+            )}
+          </label>
+          <input
+            type="file"
+            className="hidden"
+            onChange={handleImageUpload}
+            id="image_uploads"
+            name="image_uploads"
+            accept=".jpg, .png, .svg, .jpeg"
+          />
 
-            {/* button to submit the form */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm font-bold cursor-pointer py-2"
-            >
-              {isLoading ? 'Updating Profile....' : "Update Profile"}
-            </button>
-            <Link to="/user/profile">
-              <p className="flex items-center justify-center gap-2 link text-accent cursor-pointer ">
-                <AiOutlineArrowLeft />
-                Go back to home
-              </p>
-            </Link>
-          </form>
-        </div>
-      </HomeLayout>
-    </div>
+          {/* UPDATING THE FULL NAME */}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="fullName" className="text-lg font-semibold">
+              Full Name
+            </label>
+
+            <input
+              onChange={handleInputChange}
+              required
+              type="text"
+              name="fullName"
+              value={data.fullName}
+              id="fullName"
+              placeholder="Enter your name"
+              className="bg-transparent border px-2 py-1"
+            />
+          </div>
+
+          {/* button to submit the form */}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm font-bold cursor-pointer py-2"
+          >
+            {isLoading ? "Updating Profile...." : "Update Profile"}
+          </button>
+          <Link to="/user/profile">
+            <p className="flex items-center justify-center gap-2 link text-accent cursor-pointer ">
+              <AiOutlineArrowLeft />
+              Go back to home
+            </p>
+          </Link>
+        </form>
+      </div>
+    </HomeLayout>
   );
 }
